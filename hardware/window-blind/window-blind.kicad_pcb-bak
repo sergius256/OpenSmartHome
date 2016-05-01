@@ -1231,7 +1231,7 @@
   (gr_line (start 228.6 132.08) (end 137.16 132.08) (angle 90) (layer Edge.Cuts) (width 0.15))
   (gr_line (start 228.6 50.8) (end 228.6 132.08) (angle 90) (layer Edge.Cuts) (width 0.15))
   (gr_line (start 137.16 50.8) (end 228.6 50.8) (angle 90) (layer Edge.Cuts) (width 0.15))
-  (gr_text "OpenSmartHome\nWindow blind driver ver. 1.0\nCopyright (C) 2016\nSergey Portnov,\nAnatoly Karavaev\nLicense: CC-BY-SA 4.0" (at 165.608 62.992) (layer Dwgs.User)
+  (gr_text "OpenSmartHome\nWindow blind driver ver. 1.0\nCopyright (C) 2016\nSergey Portnov\nLicense: CC-BY-SA 4.0" (at 163.195 62.23) (layer Dwgs.User)
     (effects (font (size 1.5 1.5) (thickness 0.3)))
   )
 

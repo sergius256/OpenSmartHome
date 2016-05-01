@@ -21,10 +21,12 @@
 
 #include <stdio.h>
 #include <string.h>
+#include <stdlib.h>
 
 #define ADDR 0x01000001
 #define INIT_LEN 11
 #define BUFFER_LEN 256
+#define NUM_PARSER_FUNCTIONS 1
 
 /*
   Each single device recieves its unique identifier by redefining ADDR
@@ -41,11 +43,57 @@
 
   So INIT_LEN constant points to this preamble length.
 
-  BUFFER_LEN constant defines the maximum length of string recieved or
+  Each message is first accumulated inside rcvbuffer[] array. BUFFER_LEN
+  constant defines the maximum length of string recieved or
   transmitted by slave.
+
+  Command parsing logic is divided into 3 steps:
+
+  1. First we need to figure out is transmitted command addressed to
+  our device. If not, we flush command buffer and do noting. Otherwise
+  we shift buffer contents INIT_LEN symbols left removing
+  preamble. All this work is concentrated in IsTransmissionToOurs()
+  function. If it return non-zero value, parser function shouldbe
+  called to start next step.
+
+  2. Parser() funcition knows about quantity of functions realised by
+  our device via NUM_PARSER_FUNCTIONS constant. When called, Parser()
+  compares the beginning of the buffer with name of each command. In
+  case on success it shifts buffer N bytes left where N is equal to
+  command length in symbols, and returns the address of handler
+  function. THandler typedef is described for this purpose.
+
+  3. Handler function seeks the parameters it needed inside the
+  buffer, does the job and returnt 0 in case of success or -1 in case
+  of error.
+
+  If Parser() is not capable to find proper command in the list of
+  functions, it returns NULL.
+
+  Parser() looks into ParserFunctions[] array of structures
+  (TParserConfig typedef) that contains command names (char name[16])
+  not more than 16 characters long, length of that command names (int
+  name_len) and address of function that handles each command (int
+  (*handler)(void)). Ths array should be initialized prior to all
+  other setup procedures inside main() function.
+
+  Stand-alone rcvbuffer_cur_len variable is made to make calculations
+  faster. It gets value inside IsTransmissionToOurs() function and
+  used inside Parser() after IsTransmissionToOurs() was called. In
+  worst case it is equal to 0 that is safe for program logic.
 */
 
-char buffer[BUFFER_LEN], device_id[INIT_LEN+1];
+typedef struct {
+  int name_len;
+  char name[16];
+  int (*handler)(void);
+} TParserConfig;
+
+typedef int (*THandler)(void);
+
+char rcvbuffer[BUFFER_LEN], device_id[INIT_LEN+1];
+TParserConfig ParserFunctions[NUM_PARSER_FUNCTIONS];
+int rcvbuffer_cur_len=0;
 
 void SetDeviceID(void) {
   /*
@@ -64,30 +112,35 @@ int IsTransmissionToOurs(void) {
    */
   int i;
   
-  if(strncasecmp(buffer,device_id,INIT_LEN)) {
-    buffer[0]=0;
+  if(strncasecmp(rcvbuffer,device_id,INIT_LEN)) {
+    rcvbuffer[0]=0;
+    rcvbuffer_cur_len=0;
     return 0;
   }
 
-  for(i=0;i<strnlen(buffer,BUFFER_LEN)-INIT_LEN;i++)
-    buffer[i]=buffer[i+INIT_LEN];
-  buffer[i]=0;
+  rcvbuffer_cur_len=strnlen(rcvbuffer,BUFFER_LEN);
+  for(i=0;i<rcvbuffer_cur_len-INIT_LEN;i++)
+    rcvbuffer[i]=rcvbuffer[i+INIT_LEN];
+  rcvbuffer[i]=0;
+  rcvbuffer_cur_len=i;
   return -1;
 }
 
-/*
- main() is for test purposes only here.
- */
-/*
-int main() {
-  SetDeviceID();
+THandler Parser(void) {
+  /*
+    This function should be called if transmitted text is addressed to
+    our device.
+  */
+  int i,j;
 
-  sprintf(buffer,"dev01000001AT");
-  printf("buffer=%s\ndevice_id=%s\n",buffer,device_id);
-  if(IsTransmissionToOurs()){
-    printf("Yes, %s\n",buffer);
+  for(j=0;j<NUM_PARSER_FUNCTIONS;j++) {
+    if(strncasecmp(rcvbuffer,ParserFunctions[j].name,ParserFunctions[j].name_len)==0) {
+      for(i=0;i<rcvbuffer_cur_len-ParserFunctions[j].name_len;i++)
+	rcvbuffer[i]=rcvbuffer[i+ParserFunctions[j].name_len];
+      rcvbuffer[i]=0;
+      rcvbuffer_cur_len=i;
+      return ParserFunctions[j].handler;
+    }
   }
-  else
-    printf("No, %s\n",buffer);
+  return NULL;
 }
-*/
