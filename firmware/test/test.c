@@ -18,6 +18,9 @@
  * Authors: Sergey Portnov <sergius256@gmail.com>
  */
 
+#define ADDR 0x01000001
+#define NUM_PARSER_FUNCTIONS 2
+
 #include "../lib/functions.c"
 
 // Sample function that handles command "SET"
@@ -27,21 +30,30 @@ int DoSet(void)
   return 0;
 }
 
+int DoAttention(void)
+{
+  printf("OK\n");
+  return 0;
+}
+
 /**/
 int main() {
   // describing hndl variable that will recieve value returned by parser
   THandler hndl;
 
   // initializing ParserFunctiuns global array of functions
+  ParserFunctions[0].name_len=2;
+  sprintf(ParserFunctions[0].name,"AT");
+  ParserFunctions[0].handler=DoAttention;
   ParserFunctions[0].name_len=3;
-  sprintf(ParserFunctions[0].name,"SET");
-  ParserFunctions[0].handler=DoSet;
+  sprintf(ParserFunctions[1].name,"SET");
+  ParserFunctions[1].handler=DoSet;
 
   // setting device_id[] global variable for IsTransmissionToOurs() function
   SetDeviceID();
 
   // putting some test text into rcvbuffer[] global variable
-  sprintf(rcvbuffer,"dev01000001SET100");
+  sprintf(rcvbuffer,"dev01000001at");
 
   // debug info
   printf("Command in recieved buffer is %s\nOur device_id is %s\n",rcvbuffer,device_id);

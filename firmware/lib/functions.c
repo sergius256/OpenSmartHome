@@ -23,10 +23,25 @@
 #include <string.h>
 #include <stdlib.h>
 
+#ifndef ADDR
 #define ADDR 0x01000001
+#endif
+
+#ifndef INIT_LEN
 #define INIT_LEN 11
-#define BUFFER_LEN 256
+#endif
+
+#ifndef BUFFER_LEN
+#define BUFFER_LEN 64
+#endif
+
+#ifndef NUM_PARSER_FUNCTIONS
 #define NUM_PARSER_FUNCTIONS 1
+#endif
+
+#infndef COMMAND_NAME_LEN
+#define COMMAND_NAME_LEN 8
+#endif
 
 /*
   Each single device recieves its unique identifier by redefining ADDR
@@ -81,11 +96,14 @@
   faster. It gets value inside IsTransmissionToOurs() function and
   used inside Parser() after IsTransmissionToOurs() was called. In
   worst case it is equal to 0 that is safe for program logic.
+
+  Attention: #define ADDR and #define NUM_PARSER_FUNCTIONS should be
+  placed prior to #include "../lib/functions.c".
 */
 
 typedef struct {
   int name_len;
-  char name[16];
+  char name[COMMAND_NAME_LEN];
   int (*handler)(void);
 } TParserConfig;
 
