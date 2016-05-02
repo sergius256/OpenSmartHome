@@ -39,7 +39,7 @@
 #define NUM_PARSER_FUNCTIONS 1
 #endif
 
-#infndef COMMAND_NAME_LEN
+#ifndef COMMAND_NAME_LEN
 #define COMMAND_NAME_LEN 8
 #endif
 
@@ -101,17 +101,17 @@
   placed prior to #include "../lib/functions.c".
 */
 
-typedef struct {
-  int name_len;
-  char name[COMMAND_NAME_LEN];
-  int (*handler)(void);
-} TParserConfig;
+typedef signed char (*THandler)(void);
 
-typedef int (*THandler)(void);
+typedef struct {
+  unsigned char name_len;
+  char name[COMMAND_NAME_LEN];
+  THandler handler;
+} TParserConfig;
 
 char rcvbuffer[BUFFER_LEN], device_id[INIT_LEN+1];
 TParserConfig ParserFunctions[NUM_PARSER_FUNCTIONS];
-int rcvbuffer_cur_len=0;
+unsigned char rcvbuffer_cur_len=0;
 
 void SetDeviceID(void) {
   /*
@@ -121,14 +121,14 @@ void SetDeviceID(void) {
   sprintf(device_id,"DEV%08x",ADDR);
 }
 
-int IsTransmissionToOurs(void) {
+signed char IsTransmissionToOurs(void) {
   /*
     This function is needed to check if the last command addressing
     our device or not. If yes, device identifier is cleared out from
     buffer to simplify further parsing. If no, buffer gets cleared
     out.
    */
-  int i;
+  unsigned char i;
   
   if(strncasecmp(rcvbuffer,device_id,INIT_LEN)) {
     rcvbuffer[0]=0;
@@ -149,7 +149,7 @@ THandler Parser(void) {
     This function should be called if transmitted text is addressed to
     our device.
   */
-  int i,j;
+  unsigned char i,j;
 
   for(j=0;j<NUM_PARSER_FUNCTIONS;j++) {
     if(strncasecmp(rcvbuffer,ParserFunctions[j].name,ParserFunctions[j].name_len)==0) {

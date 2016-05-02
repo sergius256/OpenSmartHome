@@ -24,20 +24,20 @@
 #include "../lib/functions.c"
 
 // Sample function that handles command "SET"
-int DoSet(void)
+signed char DoSet(void)
 {
   printf("Setting %s\n",rcvbuffer);
   return 0;
 }
 
-int DoAttention(void)
+signed char DoAttention(void)
 {
   printf("OK\n");
   return 0;
 }
 
 /**/
-int main() {
+void main() {
   // describing hndl variable that will recieve value returned by parser
   THandler hndl;
 
