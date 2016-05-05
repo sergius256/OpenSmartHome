@@ -32,7 +32,7 @@
 #endif
 
 #ifndef BUFFER_LEN
-#define BUFFER_LEN 64
+#define BUFFER_LEN 32 // One command per line
 #endif
 
 #ifndef NUM_PARSER_FUNCTIONS
@@ -97,6 +97,18 @@
   used inside Parser() after IsTransmissionToOurs() was called. In
   worst case it is equal to 0 that is safe for program logic.
 
+  transmission_ready_flag variable used to signal when command is in
+  recieve buffer.
+
+  buffer[] string contains data passed to parser. This buffer thought
+  to be the one that receives bytes directly from UART. But recieving
+  procedure is autonomous because it hangs on interrupt vector. In
+  this case we cannot guarantee this buffer safety because receiving
+  function is not the one that modifies it. Parser() does the same
+  during its work. So to protect current work-in-progress command we
+  unfortunately need to define separate string that will only receive
+  data. rxbuffer[] does this work.
+
   Attention: #define ADDR and #define NUM_PARSER_FUNCTIONS should be
   placed prior to #include "../lib/functions.c".
 */
@@ -109,16 +121,27 @@ typedef struct {
   THandler handler;
 } TParserConfig;
 
-char rcvbuffer[BUFFER_LEN], device_id[INIT_LEN+1];
+char buffer[BUFFER_LEN], txbuffer[BUFFER_LEN], rxbuffer[BUFFER_LEN], device_id[INIT_LEN+1];
 TParserConfig ParserFunctions[NUM_PARSER_FUNCTIONS];
-unsigned char rcvbuffer_cur_len=0;
+unsigned char buffer_cur_len=0,rxbuffer_cur_len=0,transmission_ready_flag=0;
 
 void SetDeviceID(void) {
   /*
     This function should be called before all others to initialize
     device_id pointer.
    */
-  sprintf(device_id,"DEV%08x",ADDR);
+  device_id[0] ='D';
+  device_id[1] ='E';
+  device_id[2] ='V';
+  device_id[3] ='0'+(ADDR>>28)%0x10;
+  device_id[4] ='0'+(ADDR>>24)%0x10;
+  device_id[5] ='0'+(ADDR>>20)%0x10;
+  device_id[6] ='0'+(ADDR>>16)%0x10;
+  device_id[7] ='0'+(ADDR>>12)%0x10;
+  device_id[8] ='0'+(ADDR>>8)%0x10;
+  device_id[9] ='0'+(ADDR>>4)%0x10;
+  device_id[10]='0'+ADDR%0x10;
+  device_id[10]=0;
 }
 
 signed char IsTransmissionToOurs(void) {
@@ -130,17 +153,17 @@ signed char IsTransmissionToOurs(void) {
    */
   unsigned char i;
   
-  if(strncasecmp(rcvbuffer,device_id,INIT_LEN)) {
-    rcvbuffer[0]=0;
-    rcvbuffer_cur_len=0;
+  if(strncasecmp(buffer,device_id,INIT_LEN)) {
+    buffer[0]=0;
+    buffer_cur_len=0;
     return 0;
   }
 
-  rcvbuffer_cur_len=strnlen(rcvbuffer,BUFFER_LEN);
-  for(i=0;i<rcvbuffer_cur_len-INIT_LEN;i++)
-    rcvbuffer[i]=rcvbuffer[i+INIT_LEN];
-  rcvbuffer[i]=0;
-  rcvbuffer_cur_len=i;
+  buffer_cur_len=strnlen(buffer,BUFFER_LEN); // can be commented out due to program logic
+  for(i=0;i<buffer_cur_len-INIT_LEN;i++)
+    buffer[i]=buffer[i+INIT_LEN];
+  buffer[i]=0;
+  buffer_cur_len=i;
   return -1;
 }
 
@@ -152,13 +175,28 @@ THandler Parser(void) {
   unsigned char i,j;
 
   for(j=0;j<NUM_PARSER_FUNCTIONS;j++) {
-    if(strncasecmp(rcvbuffer,ParserFunctions[j].name,ParserFunctions[j].name_len)==0) {
-      for(i=0;i<rcvbuffer_cur_len-ParserFunctions[j].name_len;i++)
-	rcvbuffer[i]=rcvbuffer[i+ParserFunctions[j].name_len];
-      rcvbuffer[i]=0;
-      rcvbuffer_cur_len=i;
+    if(strncasecmp(buffer,ParserFunctions[j].name,ParserFunctions[j].name_len)==0) {
+      for(i=0;i<buffer_cur_len-ParserFunctions[j].name_len;i++)
+	buffer[i]=buffer[i+ParserFunctions[j].name_len];
+      buffer[i]=0;
+      buffer_cur_len=i;
       return ParserFunctions[j].handler;
     }
   }
   return NULL;
+}
+
+/*
+  This is needed to maintain two buffers for received data.
+ */
+
+void CopyFromRXtoParser(void) {
+  unsigned char i;
+
+  for(i=0;i<rxbuffer_cur_len;i++) {
+    buffer[i]=rxbuffer[i];
+  }
+  if(i<BUFFER_LEN)
+    buffer[i]=0;
+  rxbuffer_cur_len=0;
 }

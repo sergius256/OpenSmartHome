@@ -17,6 +17,7 @@
  *
  * Authors: Sergey Portnov <sergius256@gmail.com>
  */
+#include <ctype.h>
 
 #define ADDR 0x01000001
 #define NUM_PARSER_FUNCTIONS 2
@@ -26,13 +27,16 @@
 // Sample function that handles command "SET"
 signed char DoSet(void)
 {
-  printf("Setting %s\n",rcvbuffer);
+  int i;
+  printf("Buffer=%s",buffer);
+  sscanf(buffer,"%d",&i);
+  printf("Setting %d\n",i);
   return 0;
 }
 
 signed char DoAttention(void)
 {
-  printf("OK\n");
+  sprintf(txbuffer,"OK\n");
   return 0;
 }
 
@@ -45,7 +49,8 @@ void main() {
   ParserFunctions[0].name_len=2;
   sprintf(ParserFunctions[0].name,"AT");
   ParserFunctions[0].handler=DoAttention;
-  ParserFunctions[0].name_len=3;
+
+  ParserFunctions[1].name_len=3;
   sprintf(ParserFunctions[1].name,"SET");
   ParserFunctions[1].handler=DoSet;
 
@@ -53,29 +58,31 @@ void main() {
   SetDeviceID();
 
   // putting some test text into rcvbuffer[] global variable
-  sprintf(rcvbuffer,"dev01000001at");
+  sprintf(buffer,"dev01000001set100\n");
 
   // debug info
-  printf("Command in recieved buffer is %s\nOur device_id is %s\n",rcvbuffer,device_id);
+  printf("Command in recieved buffer is %s\nOur device_id is %s\n",buffer,device_id);
+
   if(IsTransmissionToOurs()){
-    printf("Transmission is for us, command in buffer is %s\n",rcvbuffer);
+    // Ok, we have a command in buffer. We need to send something 
     if((hndl=Parser())==NULL) {
-      // here we should call exception handler that will report error to server
-      printf("Parser returned error.\n");
+      sprintf(txbuffer,"%sERROR_NO_FUNCTION\n",device_id);
+      // uart_transmit();
+      buffer[0]=0;
+      buffer_cur_len=0;
     }
-    else
-      // just calling proper function and checking if everything is ok
-      if (hndl()) {
+    else{
+      if (hndl()) { // Called function returned error
 	// report error
-	printf("Function returned error.\n");
+	  sprintf(txbuffer,"%sERROR\n",device_id);
+	  //	  uart_transmit();
+	  buffer[0]=0;
+	  buffer_cur_len=0;
       }
-      else
-	{
-	  printf("Reporting success to server.\n");
-	}
-      
+    }
   }
   else
-    printf("Transmission is not for us, resulting buffer is %s\n",rcvbuffer);
+    printf("Transmission is not for us, resulting buffer is %s\n",buffer);
+  printf("Txbuffer=%s\n",txbuffer);
 }
 /**/
