@@ -91,7 +91,7 @@ ISR(USART_RX_vect, ISR_BLOCK)
   variables that describes machine state.
  */
 
-unsigned char FSM_State=0, CurrentPosition=0, DesiredPosition=0;
+unsigned char FSM_State=0, CurrentPosition=0, DesiredPosition=0, ProtectiveCounter=0;
 int MovementTimeFull,MovementTimeCurrent;
 unsigned char ReportOkFlag;
 
@@ -116,7 +116,22 @@ signed char DoAttention(void) {
 // Handler function for SET command
 
 signed char DoSet(void) {
-  sscanf(buffer,"%d",&DesiredPosition);
+  int i,pow;
+  char number[4];
+
+  for(i=0;(i<4) && (buffer[i]>='0') && (buffer[i]<='9');i++)
+    number[i]=buffer[i];
+
+  if((i--)==0)
+    return -1;
+
+  pow=1;
+  DesiredPosition=0;
+  for(;i>=0;i--) {
+    DesiredPosition+=(number[i]-'0')*pow;
+    pow=pow*10;
+  }
+
   // Some sanity check first
   if((DesiredPosition<0) || (DesiredPosition>100))
     return -1;
@@ -151,9 +166,7 @@ signed char DoReset(void) {
   return 0;
 }
 
-
 void main(void) {
-  char sw;
   short int i;
   THandler hndl;
 
@@ -199,36 +212,42 @@ void main(void) {
       uart_init();
       set_output(DDRB, PB0);  // PB0 pin is connected to L298 IN1
       set_output(DDRB, PB1);  // PB1 pin is connected to L298 IN2
-
-      set_input(DDRD, PD2); // DOWN button
+      
+      DDRD=0b10000011;
+      
+      /*      set_input(DDRD, PD2); // DOWN button
       set_input(DDRD, PD3); // UP button
       set_input(DDRD, PD4); // END1 contact
-      set_input(DDRD, PD5); // END2 contact
+      set_input(DDRD, PD5); // END2 contact */
       PORTD |= 0b00111100;  // Switching pull-up resistors on
-      
+
       output_high(PORTB, PB0);
       output_low(PORTB, PB1); // Switching motor on in forward direction
-
-      sw=0;
-      for(MovementTimeCurrent=0;sw<2;MovementTimeCurrent++) {
-	_delay_ms(10);
-	if((PORTD & 1<<PD4) == 0)
-	  sw++;
-      }
       
+      for(MovementTimeCurrent=0;;MovementTimeCurrent++) {
+	_delay_ms(10);
+	if((PIND & 1<<PD4) == 0) {
+	  _delay_ms(50);
+	  if((PIND & 1<<PD4) == 0)
+	    break;
+	}
+      }
+
       output_low(PORTB, PB0);
       output_high(PORTB, PB1); // Switching motor on in backward direction
 
-      sw=0;
-      for(MovementTimeFull=0;sw<2;MovementTimeFull++) {
+      for(MovementTimeFull=0;;MovementTimeFull++) {
 	_delay_ms(10);
-	if((PORTD & 1<<PD5) == 0)
-	  sw++;
+	if((PIND & 1<<PD5) == 0) {
+	  _delay_ms(50);
+	  if((PIND & 1<<PD5) == 0)
+	    break;
+	}
       }
 
       output_low(PORTB, PB0);
       output_low(PORTB, PB1); // Switching motor off
-
+      
       // now MovementTimeCurrent contains number of 10 ms time cycles
       // from current posisiton to upper and MovementTimeFull contains
       // number of 10 ms time cycles from one end to another.
@@ -239,7 +258,7 @@ void main(void) {
       transmission_ready_flag=0;
       ReportOkFlag=0;
       sei(); // Enable interrupts globally
-      sw=0;
+      ProtectiveCounter=0;
       FSM_State=1; // Wait for event
       break;
       /*
@@ -247,17 +266,15 @@ void main(void) {
 	received via UART.
        */
     case 1: // Wait for event case
-      // If no button is pressed, sw=0.
-      if(((PORTD & 1<<PD2) == 0) || ((PORTD & 1<<PD3) == 0))// DOWN or UP button pressed
-	sw++;
+      // If no button is pressed, ProtectiveCounter==0.
+      if(((PIND & 1<<PD2) == 0) || ((PIND & 1<<PD3) == 0))// DOWN or UP button pressed
+	ProtectiveCounter++;
       _delay_ms(20);
-      if((sw>2) && ((PORTD & 1<<PD2) == 0)) { // DOWN button still pressed
+      if((ProtectiveCounter>2) && ((PIND & 1<<PD2) == 0)) { // DOWN button still pressed
 	DesiredPosition=0;
-	// sw=0;
       }
-      if((sw>2) && ((PORTD & 1<<PD3) == 0)) { // DOWN button still pressed
+      if((ProtectiveCounter>2) && ((PIND & 1<<PD3) == 0)) { // DOWN button still pressed
 	DesiredPosition=100;
-	// sw=0;
       }
       // Now let's check our command buffer
       if(transmission_ready_flag) {
@@ -326,10 +343,10 @@ void main(void) {
       output_high(PORTB, PB0);
       output_low(PORTB, PB1); // Switching motor on in forward direction
 
-      for(sw=0;sw<2;MovementTimeCurrent--) {
+      for(ProtectiveCounter=0;ProtectiveCounter<2;MovementTimeCurrent--) {
 	_delay_ms(10);
-	if(((PORTD & 1<<PD4) == 0) || ((PORTD & 1<<PD2) == 0) || ((PORTD & 1<<PD3) == 0))
-	  sw++;
+	if(((PIND & 1<<PD4) == 0) || ((PIND & 1<<PD2) == 0) || ((PIND & 1<<PD3) == 0))
+	  ProtectiveCounter++;
 	if(CurrentPosition == DesiredPosition || MovementTimeCurrent <= 0)
 	  break;
 	CurrentPosition=(int)MovementTimeCurrent/MovementTimeFull*100;
@@ -338,7 +355,7 @@ void main(void) {
       output_low(PORTB, PB0);
       output_low(PORTB, PB1); // Switching motor off
       DesiredPosition=CurrentPosition;
-      sw=0;
+      ProtectiveCounter=0;
       if(ReportOkFlag)
 	FSM_State=4;
 	else
@@ -353,10 +370,10 @@ void main(void) {
       output_high(PORTB, PB1); // Switching motor on in backward direction
 
       
-      for(sw=0;sw<2;MovementTimeCurrent++) {
+      for(ProtectiveCounter=0;ProtectiveCounter<2;MovementTimeCurrent++) {
 	_delay_ms(10);
-	if(((PORTD & 1<<PD5) == 0) || ((PORTD & 1<<PD2) == 0) || ((PORTD & 1<<PD3) == 0))
-	  sw++;
+	if(((PIND & 1<<PD5) == 0) || ((PIND & 1<<PD2) == 0) || ((PIND & 1<<PD3) == 0))
+	  ProtectiveCounter++;
 	if(CurrentPosition == DesiredPosition || MovementTimeCurrent >= MovementTimeFull)
 	  break;
 	CurrentPosition=(int)MovementTimeCurrent/MovementTimeFull*100;
@@ -365,7 +382,7 @@ void main(void) {
       output_low(PORTB, PB0);
       output_low(PORTB, PB1); // Switching motor off
       DesiredPosition=CurrentPosition;
-      sw=0;
+      ProtectiveCounter=0;
       if(ReportOkFlag)
 	FSM_State=4;
 	else

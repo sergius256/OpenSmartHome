@@ -27,10 +27,28 @@
 // Sample function that handles command "SET"
 signed char DoSet(void)
 {
-  int i;
+  int V;
+  int i,pow;
+  char number[4];
+
   printf("Buffer=%s",buffer);
-  sscanf(buffer,"%d",&i);
-  printf("Setting %d\n",i);
+
+  for(i=0;(i<4) && (buffer[i]>='0') && (buffer[i]<='9');i++)
+    number[i]=buffer[i];
+
+  if((i--)==0)
+    return -1;
+
+  printf("Number = %s\n",number);
+  pow=1;
+  V=0;
+  for(;i>=0;i--) {
+    V+=(number[i]-'0')*pow;
+    pow=pow*10;
+    printf("%d: %c, %d, %d\n",i,number[i],pow,V);
+  }
+  //  sscanf(buffer,"%d",&V);
+  printf("Setting %d\n",V);
   return 0;
 }
 

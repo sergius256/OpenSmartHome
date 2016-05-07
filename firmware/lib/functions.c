@@ -141,7 +141,7 @@ void SetDeviceID(void) {
   device_id[8] ='0'+(ADDR>>8)%0x10;
   device_id[9] ='0'+(ADDR>>4)%0x10;
   device_id[10]='0'+ADDR%0x10;
-  device_id[10]=0;
+  device_id[11]=0;
 }
 
 signed char IsTransmissionToOurs(void) {
