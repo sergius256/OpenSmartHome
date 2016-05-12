@@ -7,6 +7,15 @@ simple protocol.
 
 # Changes
 
+2016-05-11.
+
+	* L298 moved to other side of the board in window-blind PCB.
+
+	* ISP header changed to 6-pin and moved to other side of the
+          PCB in window-blind.
+
+	* Firmware for window-blind reflects changes in PCB.
+
 2016-05-05.
 
 	* Removed sprintf() calls to optimize memory usage.

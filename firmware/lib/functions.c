@@ -125,7 +125,8 @@ char buffer[BUFFER_LEN], txbuffer[BUFFER_LEN], rxbuffer[BUFFER_LEN], device_id[I
 TParserConfig ParserFunctions[NUM_PARSER_FUNCTIONS];
 unsigned char buffer_cur_len=0,rxbuffer_cur_len=0,transmission_ready_flag=0;
 
-void SetDeviceID(void) {
+void SetDeviceID(void)
+{
   /*
     This function should be called before all others to initialize
     device_id pointer.
@@ -144,7 +145,8 @@ void SetDeviceID(void) {
   device_id[11]=0;
 }
 
-signed char IsTransmissionToOurs(void) {
+signed char IsTransmissionToOurs(void)
+{
   /*
     This function is needed to check if the last command addressing
     our device or not. If yes, device identifier is cleared out from
@@ -153,11 +155,12 @@ signed char IsTransmissionToOurs(void) {
    */
   unsigned char i;
   
-  if(strncasecmp(buffer,device_id,INIT_LEN)) {
-    buffer[0]=0;
-    buffer_cur_len=0;
-    return 0;
-  }
+  if(strncasecmp(buffer,device_id,INIT_LEN))
+    {
+      buffer[0]=0;
+      buffer_cur_len=0;
+      return 0;
+    }
 
   buffer_cur_len=strnlen(buffer,BUFFER_LEN); // can be commented out due to program logic
   for(i=0;i<buffer_cur_len-INIT_LEN;i++)
@@ -167,22 +170,24 @@ signed char IsTransmissionToOurs(void) {
   return -1;
 }
 
-THandler Parser(void) {
+THandler Parser(void)
+{
   /*
     This function should be called if transmitted text is addressed to
     our device.
   */
   unsigned char i,j;
 
-  for(j=0;j<NUM_PARSER_FUNCTIONS;j++) {
-    if(strncasecmp(buffer,ParserFunctions[j].name,ParserFunctions[j].name_len)==0) {
-      for(i=0;i<buffer_cur_len-ParserFunctions[j].name_len;i++)
-	buffer[i]=buffer[i+ParserFunctions[j].name_len];
-      buffer[i]=0;
-      buffer_cur_len=i;
-      return ParserFunctions[j].handler;
+  for(j=0;j<NUM_PARSER_FUNCTIONS;j++)
+    {
+      if(strncasecmp(buffer,ParserFunctions[j].name,ParserFunctions[j].name_len)==0) {
+	for(i=0;i<buffer_cur_len-ParserFunctions[j].name_len;i++)
+	  buffer[i]=buffer[i+ParserFunctions[j].name_len];
+	buffer[i]=0;
+	buffer_cur_len=i;
+	return ParserFunctions[j].handler;
+      }
     }
-  }
   return NULL;
 }
 
@@ -190,12 +195,14 @@ THandler Parser(void) {
   This is needed to maintain two buffers for received data.
  */
 
-void CopyFromRXtoParser(void) {
+void CopyFromRXtoParser(void)
+{
   unsigned char i;
 
-  for(i=0;i<rxbuffer_cur_len;i++) {
-    buffer[i]=rxbuffer[i];
-  }
+  for(i=0;i<rxbuffer_cur_len;i++)
+    {
+      buffer[i]=rxbuffer[i];
+    }
   if(i<BUFFER_LEN)
     buffer[i]=0;
   rxbuffer_cur_len=0;
