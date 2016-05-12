@@ -1,5 +1,5 @@
-/* functions.c - a set of common functions used in OpenSmartHome
- * hardware pieces firmware.
+/* parser.c - a set of common functions used in OpenSmartHome hardware
+ * pieces firmware.
  *
  * Copyright © 2016 Sergey Portnov
  *
@@ -22,26 +22,7 @@
 #include <stdio.h>
 #include <string.h>
 #include <stdlib.h>
-
-#ifndef ADDR
-#define ADDR 0x01000001
-#endif
-
-#ifndef INIT_LEN
-#define INIT_LEN 11
-#endif
-
-#ifndef BUFFER_LEN
-#define BUFFER_LEN 32 // One command per line
-#endif
-
-#ifndef NUM_PARSER_FUNCTIONS
-#define NUM_PARSER_FUNCTIONS 1
-#endif
-
-#ifndef COMMAND_NAME_LEN
-#define COMMAND_NAME_LEN 8
-#endif
+#include "parser.h"
 
 /*
   Each single device recieves its unique identifier by redefining ADDR
@@ -112,18 +93,6 @@
   Attention: #define ADDR and #define NUM_PARSER_FUNCTIONS should be
   placed prior to #include "../lib/functions.c".
 */
-
-typedef signed char (*THandler)(void);
-
-typedef struct {
-  unsigned char name_len;
-  char name[COMMAND_NAME_LEN];
-  THandler handler;
-} TParserConfig;
-
-char buffer[BUFFER_LEN], txbuffer[BUFFER_LEN], rxbuffer[BUFFER_LEN], device_id[INIT_LEN+1];
-TParserConfig ParserFunctions[NUM_PARSER_FUNCTIONS];
-unsigned char buffer_cur_len=0,rxbuffer_cur_len=0,transmission_ready_flag=0;
 
 void SetDeviceID(void)
 {
