@@ -68,17 +68,9 @@ int uart0_filestream = -1;
 
 void setup_io();
  
-void printButton(int g)
-{
-  if (GET_GPIO(g)) // !=0 <-> bit is 1 <- port is HIGH=3.3V
-    printf("Button pressed!\n");
-  else // port is LOW=0V
-    printf("Button released!\n");
-}
- 
 int main(int argc, char **argv)
 {
-  int g,rep;
+  int g,rep,count;
   unsigned char tx_buffer[32];
  
   // Set up gpi pointer for direct register access
@@ -106,7 +98,7 @@ int main(int argc, char **argv)
   fgets(tx_buffer,32,stdin);
 	
   if (uart0_filestream != -1) {
-    int count = write(uart0_filestream, &tx_buffer[0], (strlen(tx_buffer)));
+    count = write(uart0_filestream, &tx_buffer[0], (strlen(tx_buffer)));
     //Filestream, bytes to write, number of bytes to write
     if (count < 0) {
       printf("UART TX error\n");

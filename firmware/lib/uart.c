@@ -28,8 +28,8 @@ unsigned char WeAreBusyFlag=0;
 // UART initialization function.
 void uart_init(void)
 {
-  DDRD  |= 0b10000000; // PD7 pin is connected to RE/DE pins of MAX485
-  PORTD &= 0b01111111; // It should be set to 0 until we really transmitting someting out
+  DDRD  |= 0b00000100; // PD2 pin is connected to RE/DE pins of MAX485
+  PORTD &= 0b11111011; // It should be set to 0 until we really transmitting someting out
 
   UBRR0H = UBRRH_VALUE;
   UBRR0L = UBRRL_VALUE;
@@ -51,8 +51,8 @@ void uart_transmit(char *str)
 {
   unsigned char i;
 
-  // Here we need to put PD7 pin to 1 to turn MAX485 into transmitter mode
-  PORTD |= 0b10000000;
+  // Here we need to put PD2 pin to 1 to turn MAX485 into transmitter mode
+  PORTD |= 0b00000100;
 
   // First send device_id string:
   for(i=0;i<INIT_LEN;i++)
@@ -74,7 +74,7 @@ void uart_transmit(char *str)
   while(str[i-1]!='\n');
 
   // Making all things back
-  PORTD &= 0b01111111;
+  PORTD &= 0b11111011;
 }
 
 // Functions used in FSM states 2 and 3

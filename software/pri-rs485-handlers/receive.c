@@ -67,14 +67,6 @@ int uart0_filestream = -1;
 
 void setup_io();
  
-void printButton(int g)
-{
-  if (GET_GPIO(g)) // !=0 <-> bit is 1 <- port is HIGH=3.3V
-    printf("Button pressed!\n");
-  else // port is LOW=0V
-    printf("Button released!\n");
-}
- 
 int main(int argc, char **argv)
 {
   int rx_length;
