@@ -47,7 +47,7 @@ void ParserSetup(void);
  */
 
 unsigned char FSM_State=0, CurrentPosition=0, DesiredPosition=0;
-unsigned int MovementTimeFull,MovementTimeCurrent;
+unsigned long int MovementTimeFull,MovementTimeCurrent;
 unsigned char ReportOkFlag;
 
 void main(void) {
@@ -56,6 +56,7 @@ void main(void) {
   ParserSetup();
   SetDeviceID();
   InitExceptionText();
+  FSM_State=0;
   
   // Infinite main loop
   for(;;)
@@ -69,8 +70,10 @@ void main(void) {
 	case 0: // Initialize system
 	  uart_init();
 
-	  DDRB=0b00000011;
-	  DDRD=0b00000110;
+	  DDRB =0b00000011;
+	  DDRD =0b00000110;
+	  PORTB=0b11111100;
+	  PORTD=0b11111000;
 
 	  // SW1 UP -> PB2
 	  // SW2 DOWN -> PD7
@@ -78,17 +81,17 @@ void main(void) {
 	  // SW3 END2 -> PD5
 
 	  // Switching motor on in forward direction
-	  PORTB |= 0b00000001;
-	  PORTB &= 0b11111101;
+	  PORTB |= 0x001; // 0b00000001;
+	  PORTB &= 0x0FD; // 0b11111101;
 	  
 	  for(MovementTimeCurrent=0;;MovementTimeCurrent++)
 	    {
 	      _delay_ms(10);
-	      if((PIND & 0b00010000) == 0) // END1 switch
+	      if(!(PIND & 0b00010000)) // END1 switch _BV(PD4))) //
 		{
 		  _delay_ms(50);
 		  MovementTimeCurrent+=5;
-		  if((PIND & 0b00010000) == 0)
+		  if(!(PIND & 0b00010000)) // _BV(PD4))) //
 		    break;
 		}
 	    }
@@ -97,14 +100,19 @@ void main(void) {
 	  PORTB &= 0b11111110;
 	  PORTB |= 0b00000010;
 
-	  for(MovementTimeFull=0;;MovementTimeFull++)
+	  // We have already moved up for MovementTimeCurrent*10
+	  // milliseconds so we can safely move back for this time.
+	  for(MovementTimeFull=0;MovementTimeFull<=MovementTimeCurrent;MovementTimeFull++)
+	    _delay_ms(10);
+
+	  for(;;MovementTimeFull++)
 	    {
 	      _delay_ms(10);
-	      if((PIND & 0b00100000) == 0) // END2 switch
+	      if(!(PIND & 0b00100000)) // END2 switch _BV(PD5))) // 
 		{
 		  _delay_ms(50);
 		  MovementTimeFull+=5;
-		  if((PIND & 0b00100000) == 0)
+		  if(!(PIND & 0b00100000)) // _BV(PD5))) // 
 		    break;
 		}
 	    }
@@ -117,7 +125,7 @@ void main(void) {
 	  // MovementTimeFull contains number of 10 ms time cycles
 	  // from one end to another. Here we set DesiredPosition
 	  // because actual current position is "fully closed".
-	  DesiredPosition=(int)MovementTimeCurrent/MovementTimeFull*100;
+	  DesiredPosition=(int)MovementTimeCurrent*100/MovementTimeFull;
 	  CurrentPosition=100;
 
 	  transmission_ready_flag=0;
@@ -131,16 +139,16 @@ void main(void) {
 	    received via UART.
 	  */
 	case 1: // Wait for event case
-	  if((PINB & 0b0100) == 0) // UP switch
+	  if(!(PINB & 0b0100)) // UP switch
 	    {
 	      _delay_ms(50);
-	      if((PINB & 0b0100) == 0) // still pressed
+	      if(!(PINB & 0b0100)) // still pressed
 		DesiredPosition=0;
 	    }
-	  if((PIND & 0b10000000) == 0) // DOWN switch
+	  if(!(PIND & 0b10000000)) // DOWN switch
 	    {
 	      _delay_ms(50);
-	      if((PIND & 0b10000000) == 0)
+	      if(!(PIND & 0b10000000))
 		  DesiredPosition=100;
 	    }
 
@@ -195,20 +203,20 @@ void main(void) {
 	      CurrentPosition=(int)MovementTimeCurrent/MovementTimeFull*100;
 	      if(CurrentPosition == DesiredPosition)
 		break;
-	      if((PIND & 0b00010000) == 0) // END1 switch reached
+	      if(!(PIND & 0b00010000)) // END1 switch reached
 		{
 		  _delay_ms(50);
-		  if((PIND & 0b00010000) == 0) // still short
+		  if(!(PIND & 0b00010000)) // still short
 		    {
 		      MovementTimeCurrent=0; // We reached the beginning
 		      break;
 		    }
 		}
-	      if(((PIND & 0b10000000) == 0) || ((PINB & 0b0100) == 0)) // UP or DOWN switch pressed
+	      if((!(PIND & 0b10000000)) || (!(PINB & 0b0100))) // UP or DOWN switch pressed
 		{
 		  _delay_ms(50);
 		  MovementTimeCurrent-=5;
-		  if(((PIND & 0b10000000) == 0) || ((PINB & 0b0100) == 0)) // ...still pressed
+		  if((!(PIND & 0b10000000)) || (!(PINB & 0b0100))) // ...still pressed
 		    break;
 		}
 	    }
@@ -245,20 +253,20 @@ void main(void) {
 	      CurrentPosition=(int)MovementTimeCurrent/MovementTimeFull*100;
 	      if(CurrentPosition == DesiredPosition)
 		break;
-	      if((PIND & 0b00100000) == 0) // END2 switch reached
+	      if(!(PIND & 0b00100000)) // END2 switch reached
 		{
 		  _delay_ms(50);
-		  if((PIND & 0b00100000) == 0) // still short
+		  if(!(PIND & 0b00100000)) // still short
 		    {
 		      MovementTimeCurrent=MovementTimeFull; // We reached the end
 		      break;
 		    }
 		}
-	      if(((PIND & 0b10000000) == 0) || ((PINB & 0b0100) == 0)) // UP or DOWN switch pressed
+	      if((!(PIND & 0b10000000)) || (!(PINB & 0b0100))) // UP or DOWN switch pressed
 		{
 		  _delay_ms(50);
 		  MovementTimeCurrent+=5;
-		  if(((PIND & 0b10000000) == 0) || ((PINB & 0b0100) == 0)) // ...still pressed
+		  if((!(PIND & 0b10000000)) || (!(PINB & 0b0100))) // ...still pressed
 		    break;
 		}
 	    }
