@@ -28,7 +28,7 @@ unsigned char WeAreBusyFlag=0;
 // UART initialization function.
 void uart_init(void)
 {
-  DDRD  |= 0b00000100; // PD2 pin is connected to RE/DE pins of MAX485
+  //  DDRD  |= 0b00000100; // PD2 pin is connected to RE/DE pins of MAX485
   PORTD &= 0b11111011; // It should be set to 0 until we really transmitting someting out
 
   UBRR0H = UBRRH_VALUE;
