@@ -1,0 +1,329 @@
+DEBUG      root            <module>   1032:  - locale: ru_RU
+DEBUG      PostPro.PostProcessorConfig load_config 198 :  - read existing varspace '/home/sergius/build/lib/dxf2gcode/postpro_config/postpro_config.cfg'
+DEBUG      root            <module>   1071:  - Started with following options:
+ArgumentParser(prog='dxf2gcode.py', usage=None, description=None, version=None, formatter_class=<class 'argparse.HelpFormatter'>, conflict_handler='error', add_help=True)
+INFO       root            OpenFileDialog 704 :  - File: /home/sergius/deeds/smarthome/mechanics/irrigator-pump/rotor.d2g selected
+INFO       root            load       751 :  - Loading file: /home/sergius/deeds/smarthome/mechanics/irrigator-pump/rotor.dxf
+DEBUG      DxfImport.Import Get_Line_Pairs 196 :  - Did read 1943 of linepairs from DXF
+INFO       DxfImport.Import __init__   79  :  - Reading DXF Structure
+INFO       DxfImport.Import Read_Blocks 299 :  - Reading Block *Model_Space; Nr: 0
+DEBUG      DxfImport.Import Read_Blocks 308 :  - Found block pos Value 10 at: 1003
+INFO       DxfImport.Import Read_Blocks 299 :  - Reading Block *Paper_Space; Nr: 1
+DEBUG      DxfImport.Import Read_Blocks 308 :  - Found block pos Value 10 at: 1021
+INFO       DxfImport.Import Read_Blocks 299 :  - Reading Block *Paper_Space0; Nr: 2
+DEBUG      DxfImport.Import Read_Blocks 308 :  - Found block pos Value 10 at: 1039
+INFO       DxfImport.Import __init__   94  :  - Creating Contours of Block Nr: 0
+INFO       DxfImport.Import __init__   94  :  - Creating Contours of Block Nr: 1
+INFO       DxfImport.Import __init__   94  :  - Creating Contours of Block Nr: 2
+INFO       DxfImport.Import __init__   97  :  - Creating Contours of Entities
+INFO       root            load       756 :  - Loaded layers: 1
+INFO       root            load       757 :  - Loaded blocks: 3
+INFO       root            load       761 :  - Block 0 includes 0 Geometries, reduced to 0 Contours, used layers: []
+INFO       root            load       761 :  - Block 1 includes 0 Geometries, reduced to 0 Contours, used layers: []
+INFO       root            load       761 :  - Block 2 includes 0 Geometries, reduced to 0 Contours, used layers: []
+INFO       root            load       765 :  - Loaded 19 entity geometries; reduced to 19 contours; used layers: [0]; number of inserts 0
+INFO       root            load       772 :  - Drawing units: millimeters
+DEBUG      Core.Shape      setNearestStPoint 180 :  - Clicked Point: X ->  0.000  Y ->  0.000
+DEBUG      Core.Shape      setNearestStPoint 182 :  - Old Start Point: X -> -33.941  Y -> -33.941
+DEBUG      Core.Shape      setNearestStPoint 191 :  - New Start Point: X -> 33.941  Y -> 33.941
+DEBUG      Core.Shape      AnalyseAndOptimize 171 :  - Analysing the shape for CW direction Nr: 0
+DEBUG      Core.Shape      setNearestStPoint 180 :  - Clicked Point: X ->  0.000  Y ->  0.000
+DEBUG      Core.Shape      setNearestStPoint 182 :  - Old Start Point: X -> -2.828  Y -> 34.172
+DEBUG      Core.Shape      setNearestStPoint 191 :  - New Start Point: X -> -2.828  Y -> 34.172
+DEBUG      Core.Shape      AnalyseAndOptimize 171 :  - Analysing the shape for CW direction Nr: 1
+DEBUG      Core.Shape      setNearestStPoint 180 :  - Clicked Point: X ->  0.000  Y ->  0.000
+DEBUG      Core.Shape      setNearestStPoint 182 :  - Old Start Point: X -> 29.215  Y -> -21.328
+DEBUG      Core.Shape      setNearestStPoint 191 :  - New Start Point: X -> 29.215  Y -> -21.328
+DEBUG      Core.Shape      AnalyseAndOptimize 171 :  - Analysing the shape for CW direction Nr: 2
+DEBUG      Core.Shape      setNearestStPoint 180 :  - Clicked Point: X ->  0.000  Y ->  0.000
+DEBUG      Core.Shape      setNearestStPoint 182 :  - Old Start Point: X -> -34.871  Y -> -21.328
+DEBUG      Core.Shape      setNearestStPoint 191 :  - New Start Point: X -> -29.215  Y -> -15.672
+DEBUG      Core.Shape      AnalyseAndOptimize 171 :  - Analysing the shape for CW direction Nr: 3
+DEBUG      Core.Shape      setNearestStPoint 180 :  - Clicked Point: X ->  0.000  Y ->  0.000
+DEBUG      Core.Shape      setNearestStPoint 182 :  - Old Start Point: X -> -7.778  Y -> -7.778
+DEBUG      Core.Shape      setNearestStPoint 191 :  - New Start Point: X -> -7.778  Y -> -7.778
+DEBUG      Core.Shape      AnalyseAndOptimize 171 :  - Analysing the shape for CW direction Nr: 4
+DEBUG      Core.Shape      setNearestStPoint 180 :  - Clicked Point: X ->  0.000  Y ->  0.000
+DEBUG      Core.Shape      setNearestStPoint 182 :  - Old Start Point: X -> -2.121  Y -> 12.879
+DEBUG      Core.Shape      setNearestStPoint 191 :  - New Start Point: X -> -2.121  Y -> 12.879
+DEBUG      Core.Shape      AnalyseAndOptimize 171 :  - Analysing the shape for CW direction Nr: 5
+DEBUG      Core.Shape      setNearestStPoint 180 :  - Clicked Point: X ->  0.000  Y ->  0.000
+DEBUG      Core.Shape      setNearestStPoint 182 :  - Old Start Point: X -> -15.112  Y ->  5.379
+DEBUG      Core.Shape      setNearestStPoint 191 :  - New Start Point: X -> -10.869  Y ->  9.621
+DEBUG      Core.Shape      AnalyseAndOptimize 171 :  - Analysing the shape for CW direction Nr: 6
+DEBUG      Core.Shape      setNearestStPoint 180 :  - Clicked Point: X ->  0.000  Y ->  0.000
+DEBUG      Core.Shape      setNearestStPoint 182 :  - Old Start Point: X -> -15.112  Y -> -9.621
+DEBUG      Core.Shape      setNearestStPoint 191 :  - New Start Point: X -> -10.869  Y -> -5.379
+DEBUG      Core.Shape      AnalyseAndOptimize 171 :  - Analysing the shape for CW direction Nr: 7
+DEBUG      Core.Shape      setNearestStPoint 180 :  - Clicked Point: X ->  0.000  Y ->  0.000
+DEBUG      Core.Shape      setNearestStPoint 182 :  - Old Start Point: X -> -2.121  Y -> -17.121
+DEBUG      Core.Shape      setNearestStPoint 191 :  - New Start Point: X ->  2.121  Y -> -12.879
+DEBUG      Core.Shape      AnalyseAndOptimize 171 :  - Analysing the shape for CW direction Nr: 8
+DEBUG      Core.Shape      setNearestStPoint 180 :  - Clicked Point: X ->  0.000  Y ->  0.000
+DEBUG      Core.Shape      setNearestStPoint 182 :  - Old Start Point: X -> 10.869  Y -> -9.621
+DEBUG      Core.Shape      setNearestStPoint 191 :  - New Start Point: X -> 10.869  Y -> -9.621
+DEBUG      Core.Shape      AnalyseAndOptimize 171 :  - Analysing the shape for CW direction Nr: 9
+DEBUG      Core.Shape      setNearestStPoint 180 :  - Clicked Point: X ->  0.000  Y ->  0.000
+DEBUG      Core.Shape      setNearestStPoint 182 :  - Old Start Point: X -> 10.869  Y ->  5.379
+DEBUG      Core.Shape      setNearestStPoint 191 :  - New Start Point: X -> 10.869  Y ->  5.379
+DEBUG      Core.Shape      AnalyseAndOptimize 171 :  - Analysing the shape for CW direction Nr: 10
+DEBUG      Core.Shape      setNearestStPoint 180 :  - Clicked Point: X ->  0.000  Y ->  0.000
+DEBUG      Core.Shape      setNearestStPoint 182 :  - Old Start Point: X -> -4.243  Y -> -4.243
+DEBUG      Core.Shape      setNearestStPoint 191 :  - New Start Point: X ->  4.243  Y ->  4.243
+DEBUG      Core.Shape      AnalyseAndOptimize 171 :  - Analysing the shape for CW direction Nr: 11
+DEBUG      Core.Shape      setNearestStPoint 180 :  - Clicked Point: X ->  0.000  Y ->  0.000
+DEBUG      Core.Shape      setNearestStPoint 182 :  - Old Start Point: X -> -23.121  Y -> 34.252
+DEBUG      Core.Shape      setNearestStPoint 191 :  - New Start Point: X -> -23.121  Y -> 34.252
+DEBUG      Core.Shape      AnalyseAndOptimize 171 :  - Analysing the shape for CW direction Nr: 12
+DEBUG      Core.Shape      setNearestStPoint 180 :  - Clicked Point: X ->  0.000  Y ->  0.000
+DEBUG      Core.Shape      setNearestStPoint 182 :  - Old Start Point: X -> 18.879  Y -> 34.252
+DEBUG      Core.Shape      setNearestStPoint 191 :  - New Start Point: X -> 18.879  Y -> 34.252
+DEBUG      Core.Shape      AnalyseAndOptimize 171 :  - Analysing the shape for CW direction Nr: 13
+DEBUG      Core.Shape      setNearestStPoint 180 :  - Clicked Point: X ->  0.000  Y ->  0.000
+DEBUG      Core.Shape      setNearestStPoint 182 :  - Old Start Point: X -> 39.879  Y -> -2.121
+DEBUG      Core.Shape      setNearestStPoint 191 :  - New Start Point: X -> 39.879  Y -> -2.121
+DEBUG      Core.Shape      AnalyseAndOptimize 171 :  - Analysing the shape for CW direction Nr: 14
+DEBUG      Core.Shape      setNearestStPoint 180 :  - Clicked Point: X ->  0.000  Y ->  0.000
+DEBUG      Core.Shape      setNearestStPoint 182 :  - Old Start Point: X -> 18.879  Y -> -38.494
+DEBUG      Core.Shape      setNearestStPoint 191 :  - New Start Point: X -> 23.121  Y -> -34.252
+DEBUG      Core.Shape      AnalyseAndOptimize 171 :  - Analysing the shape for CW direction Nr: 15
+DEBUG      Core.Shape      setNearestStPoint 180 :  - Clicked Point: X ->  0.000  Y ->  0.000
+DEBUG      Core.Shape      setNearestStPoint 182 :  - Old Start Point: X -> -23.121  Y -> -38.494
+DEBUG      Core.Shape      setNearestStPoint 191 :  - New Start Point: X -> -18.879  Y -> -34.252
+DEBUG      Core.Shape      AnalyseAndOptimize 171 :  - Analysing the shape for CW direction Nr: 16
+DEBUG      Core.Shape      setNearestStPoint 180 :  - Clicked Point: X ->  0.000  Y ->  0.000
+DEBUG      Core.Shape      setNearestStPoint 182 :  - Old Start Point: X -> -44.121  Y -> -2.121
+DEBUG      Core.Shape      setNearestStPoint 191 :  - New Start Point: X -> -39.879  Y ->  2.121
+DEBUG      Core.Shape      AnalyseAndOptimize 171 :  - Analysing the shape for CW direction Nr: 17
+DEBUG      Core.Shape      setNearestStPoint 180 :  - Clicked Point: X ->  0.000  Y ->  0.000
+DEBUG      Core.Shape      setNearestStPoint 182 :  - Old Start Point: X -> -5.657  Y -> -5.657
+DEBUG      Core.Shape      setNearestStPoint 191 :  - New Start Point: X -> -5.657  Y -> -5.657
+DEBUG      Core.Shape      AnalyseAndOptimize 171 :  - Analysing the shape for CW direction Nr: 18
+DEBUG      Core.Shape      setNearestStPoint 180 :  - Clicked Point: X -> -2.828  Y -> 34.172
+DEBUG      Core.Shape      setNearestStPoint 182 :  - Old Start Point: X -> -2.828  Y -> 34.172
+DEBUG      Core.Shape      setNearestStPoint 191 :  - New Start Point: X -> -2.828  Y -> 34.172
+DEBUG      Core.Shape      setNearestStPoint 180 :  - Clicked Point: X -> 29.215  Y -> -21.328
+DEBUG      Core.Shape      setNearestStPoint 182 :  - Old Start Point: X -> 29.215  Y -> -21.328
+DEBUG      Core.Shape      setNearestStPoint 191 :  - New Start Point: X -> 29.215  Y -> -21.328
+DEBUG      Core.Shape      setNearestStPoint 180 :  - Clicked Point: X -> -29.215  Y -> -15.672
+DEBUG      Core.Shape      setNearestStPoint 182 :  - Old Start Point: X -> -29.215  Y -> -15.672
+DEBUG      Core.Shape      setNearestStPoint 191 :  - New Start Point: X -> -29.215  Y -> -15.672
+DEBUG      Core.Shape      setNearestStPoint 180 :  - Clicked Point: X -> -7.778  Y -> -7.778
+DEBUG      Core.Shape      setNearestStPoint 182 :  - Old Start Point: X -> -7.778  Y -> -7.778
+DEBUG      Core.Shape      setNearestStPoint 191 :  - New Start Point: X -> -7.778  Y -> -7.778
+DEBUG      Core.Shape      setNearestStPoint 180 :  - Clicked Point: X -> -2.121  Y -> 12.879
+DEBUG      Core.Shape      setNearestStPoint 182 :  - Old Start Point: X -> -2.121  Y -> 12.879
+DEBUG      Core.Shape      setNearestStPoint 191 :  - New Start Point: X -> -2.121  Y -> 12.879
+DEBUG      Core.Shape      setNearestStPoint 180 :  - Clicked Point: X -> -10.869  Y ->  9.621
+DEBUG      Core.Shape      setNearestStPoint 182 :  - Old Start Point: X -> -10.869  Y ->  9.621
+DEBUG      Core.Shape      setNearestStPoint 191 :  - New Start Point: X -> -10.869  Y ->  9.621
+DEBUG      Core.Shape      setNearestStPoint 180 :  - Clicked Point: X -> -10.869  Y -> -5.379
+DEBUG      Core.Shape      setNearestStPoint 182 :  - Old Start Point: X -> -10.869  Y -> -5.379
+DEBUG      Core.Shape      setNearestStPoint 191 :  - New Start Point: X -> -10.869  Y -> -5.379
+DEBUG      Core.Shape      setNearestStPoint 180 :  - Clicked Point: X ->  2.121  Y -> -12.879
+DEBUG      Core.Shape      setNearestStPoint 182 :  - Old Start Point: X ->  2.121  Y -> -12.879
+DEBUG      Core.Shape      setNearestStPoint 191 :  - New Start Point: X ->  2.121  Y -> -12.879
+DEBUG      Core.Shape      setNearestStPoint 180 :  - Clicked Point: X -> 10.869  Y -> -9.621
+DEBUG      Core.Shape      setNearestStPoint 182 :  - Old Start Point: X -> 10.869  Y -> -9.621
+DEBUG      Core.Shape      setNearestStPoint 191 :  - New Start Point: X -> 10.869  Y -> -9.621
+DEBUG      Core.Shape      setNearestStPoint 180 :  - Clicked Point: X -> 10.869  Y ->  5.379
+DEBUG      Core.Shape      setNearestStPoint 182 :  - Old Start Point: X -> 10.869  Y ->  5.379
+DEBUG      Core.Shape      setNearestStPoint 191 :  - New Start Point: X -> 10.869  Y ->  5.379
+DEBUG      Core.Shape      setNearestStPoint 180 :  - Clicked Point: X ->  4.243  Y ->  4.243
+DEBUG      Core.Shape      setNearestStPoint 182 :  - Old Start Point: X ->  4.243  Y ->  4.243
+DEBUG      Core.Shape      setNearestStPoint 191 :  - New Start Point: X ->  4.243  Y ->  4.243
+DEBUG      Core.Shape      setNearestStPoint 180 :  - Clicked Point: X -> -23.121  Y -> 34.252
+DEBUG      Core.Shape      setNearestStPoint 182 :  - Old Start Point: X -> -23.121  Y -> 34.252
+DEBUG      Core.Shape      setNearestStPoint 191 :  - New Start Point: X -> -23.121  Y -> 34.252
+DEBUG      Core.Shape      setNearestStPoint 180 :  - Clicked Point: X -> 18.879  Y -> 34.252
+DEBUG      Core.Shape      setNearestStPoint 182 :  - Old Start Point: X -> 18.879  Y -> 34.252
+DEBUG      Core.Shape      setNearestStPoint 191 :  - New Start Point: X -> 18.879  Y -> 34.252
+DEBUG      Core.Shape      setNearestStPoint 180 :  - Clicked Point: X -> 39.879  Y -> -2.121
+DEBUG      Core.Shape      setNearestStPoint 182 :  - Old Start Point: X -> 39.879  Y -> -2.121
+DEBUG      Core.Shape      setNearestStPoint 191 :  - New Start Point: X -> 39.879  Y -> -2.121
+DEBUG      Core.Shape      setNearestStPoint 180 :  - Clicked Point: X -> 23.121  Y -> -34.252
+DEBUG      Core.Shape      setNearestStPoint 182 :  - Old Start Point: X -> 23.121  Y -> -34.252
+DEBUG      Core.Shape      setNearestStPoint 191 :  - New Start Point: X -> 23.121  Y -> -34.252
+DEBUG      Core.Shape      setNearestStPoint 180 :  - Clicked Point: X -> -18.879  Y -> -34.252
+DEBUG      Core.Shape      setNearestStPoint 182 :  - Old Start Point: X -> -18.879  Y -> -34.252
+DEBUG      Core.Shape      setNearestStPoint 191 :  - New Start Point: X -> -18.879  Y -> -34.252
+DEBUG      Core.Shape      setNearestStPoint 180 :  - Clicked Point: X -> -39.879  Y ->  2.121
+DEBUG      Core.Shape      setNearestStPoint 182 :  - Old Start Point: X -> -39.879  Y ->  2.121
+DEBUG      Core.Shape      setNearestStPoint 191 :  - New Start Point: X -> -39.879  Y ->  2.121
+DEBUG      Core.Shape      setNearestStPoint 180 :  - Clicked Point: X -> 33.941  Y -> 33.941
+DEBUG      Core.Shape      setNearestStPoint 182 :  - Old Start Point: X -> 33.941  Y -> 33.941
+DEBUG      Core.Shape      setNearestStPoint 191 :  - New Start Point: X -> 33.941  Y -> 33.941
+DEBUG      DxfImport.myCanvasClass autoscale  241 :  - Autoscaling to extend: PyQt4.QtCore.QRectF(-47.99602144528741, -47.99602144528741, 100.79164503510357, 100.79164503510357)
+DEBUG      DxfImport.myCanvasClass __init__   111 :  - The selected shapes have the following direction: 0
+DEBUG      DxfImport.myCanvasClass setRightComp 256 :  - Changed Cutter Correction to right for shape: 18
+INFO       root            showSaveDialog 499 :  - File: /home/sergius/deeds/smarthome/mechanics/irrigator-pump/rotor selected
+INFO       root            saveProject 992 :  - Save project to FILE was successful
+DEBUG      Gui.PopUpDialog __init__   48  :  - Workpiece zero offset
+DEBUG      Gui.PopUpDialog __init__   49  :  - [u'Offset X axis [mm]:', u'Offset Y axis [mm]:']
+DEBUG      Gui.PopUpDialog __init__   50  :  - [0.0, 0.0]
+DEBUG      Core.Shape      setNearestStPoint 180 :  - Clicked Point: X ->  0.000  Y ->  0.000
+DEBUG      Core.Shape      setNearestStPoint 182 :  - Old Start Point: X -> 14.055  Y -> 14.055
+DEBUG      Core.Shape      setNearestStPoint 191 :  - New Start Point: X -> 14.055  Y -> 14.055
+DEBUG      Core.Shape      AnalyseAndOptimize 171 :  - Analysing the shape for CW direction Nr: 0
+DEBUG      Core.Shape      setNearestStPoint 180 :  - Clicked Point: X ->  0.000  Y ->  0.000
+DEBUG      Core.Shape      setNearestStPoint 182 :  - Old Start Point: X -> 45.168  Y -> 82.168
+DEBUG      Core.Shape      setNearestStPoint 191 :  - New Start Point: X -> 45.168  Y -> 82.168
+DEBUG      Core.Shape      AnalyseAndOptimize 171 :  - Analysing the shape for CW direction Nr: 1
+DEBUG      Core.Shape      setNearestStPoint 180 :  - Clicked Point: X ->  0.000  Y ->  0.000
+DEBUG      Core.Shape      setNearestStPoint 182 :  - Old Start Point: X -> 77.211  Y -> 26.668
+DEBUG      Core.Shape      setNearestStPoint 191 :  - New Start Point: X -> 77.211  Y -> 26.668
+DEBUG      Core.Shape      AnalyseAndOptimize 171 :  - Analysing the shape for CW direction Nr: 2
+DEBUG      Core.Shape      setNearestStPoint 180 :  - Clicked Point: X ->  0.000  Y ->  0.000
+DEBUG      Core.Shape      setNearestStPoint 182 :  - Old Start Point: X -> 13.125  Y -> 26.668
+DEBUG      Core.Shape      setNearestStPoint 191 :  - New Start Point: X -> 13.125  Y -> 26.668
+DEBUG      Core.Shape      AnalyseAndOptimize 171 :  - Analysing the shape for CW direction Nr: 3
+DEBUG      Core.Shape      setNearestStPoint 180 :  - Clicked Point: X ->  0.000  Y ->  0.000
+DEBUG      Core.Shape      setNearestStPoint 182 :  - Old Start Point: X -> 40.218  Y -> 40.218
+DEBUG      Core.Shape      setNearestStPoint 191 :  - New Start Point: X -> 40.218  Y -> 40.218
+DEBUG      Core.Shape      AnalyseAndOptimize 171 :  - Analysing the shape for CW direction Nr: 4
+DEBUG      Core.Shape      setNearestStPoint 180 :  - Clicked Point: X ->  0.000  Y ->  0.000
+DEBUG      Core.Shape      setNearestStPoint 182 :  - Old Start Point: X -> 45.875  Y -> 60.875
+DEBUG      Core.Shape      setNearestStPoint 191 :  - New Start Point: X -> 45.875  Y -> 60.875
+DEBUG      Core.Shape      AnalyseAndOptimize 171 :  - Analysing the shape for CW direction Nr: 5
+DEBUG      Core.Shape      setNearestStPoint 180 :  - Clicked Point: X ->  0.000  Y ->  0.000
+DEBUG      Core.Shape      setNearestStPoint 182 :  - Old Start Point: X -> 32.884  Y -> 53.375
+DEBUG      Core.Shape      setNearestStPoint 191 :  - New Start Point: X -> 32.884  Y -> 53.375
+DEBUG      Core.Shape      AnalyseAndOptimize 171 :  - Analysing the shape for CW direction Nr: 6
+DEBUG      Core.Shape      setNearestStPoint 180 :  - Clicked Point: X ->  0.000  Y ->  0.000
+DEBUG      Core.Shape      setNearestStPoint 182 :  - Old Start Point: X -> 32.884  Y -> 38.375
+DEBUG      Core.Shape      setNearestStPoint 191 :  - New Start Point: X -> 32.884  Y -> 38.375
+DEBUG      Core.Shape      AnalyseAndOptimize 171 :  - Analysing the shape for CW direction Nr: 7
+DEBUG      Core.Shape      setNearestStPoint 180 :  - Clicked Point: X ->  0.000  Y ->  0.000
+DEBUG      Core.Shape      setNearestStPoint 182 :  - Old Start Point: X -> 45.875  Y -> 30.875
+DEBUG      Core.Shape      setNearestStPoint 191 :  - New Start Point: X -> 45.875  Y -> 30.875
+DEBUG      Core.Shape      AnalyseAndOptimize 171 :  - Analysing the shape for CW direction Nr: 8
+DEBUG      Core.Shape      setNearestStPoint 180 :  - Clicked Point: X ->  0.000  Y ->  0.000
+DEBUG      Core.Shape      setNearestStPoint 182 :  - Old Start Point: X -> 58.865  Y -> 38.375
+DEBUG      Core.Shape      setNearestStPoint 191 :  - New Start Point: X -> 58.865  Y -> 38.375
+DEBUG      Core.Shape      AnalyseAndOptimize 171 :  - Analysing the shape for CW direction Nr: 9
+DEBUG      Core.Shape      setNearestStPoint 180 :  - Clicked Point: X ->  0.000  Y ->  0.000
+DEBUG      Core.Shape      setNearestStPoint 182 :  - Old Start Point: X -> 58.865  Y -> 53.375
+DEBUG      Core.Shape      setNearestStPoint 191 :  - New Start Point: X -> 58.865  Y -> 53.375
+DEBUG      Core.Shape      AnalyseAndOptimize 171 :  - Analysing the shape for CW direction Nr: 10
+DEBUG      Core.Shape      setNearestStPoint 180 :  - Clicked Point: X ->  0.000  Y ->  0.000
+DEBUG      Core.Shape      setNearestStPoint 182 :  - Old Start Point: X -> 43.753  Y -> 43.753
+DEBUG      Core.Shape      setNearestStPoint 191 :  - New Start Point: X -> 43.753  Y -> 43.753
+DEBUG      Core.Shape      AnalyseAndOptimize 171 :  - Analysing the shape for CW direction Nr: 11
+DEBUG      Core.Shape      setNearestStPoint 180 :  - Clicked Point: X ->  0.000  Y ->  0.000
+DEBUG      Core.Shape      setNearestStPoint 182 :  - Old Start Point: X -> 24.875  Y -> 82.248
+DEBUG      Core.Shape      setNearestStPoint 191 :  - New Start Point: X -> 24.875  Y -> 82.248
+DEBUG      Core.Shape      AnalyseAndOptimize 171 :  - Analysing the shape for CW direction Nr: 12
+DEBUG      Core.Shape      setNearestStPoint 180 :  - Clicked Point: X ->  0.000  Y ->  0.000
+DEBUG      Core.Shape      setNearestStPoint 182 :  - Old Start Point: X -> 66.875  Y -> 82.248
+DEBUG      Core.Shape      setNearestStPoint 191 :  - New Start Point: X -> 66.875  Y -> 82.248
+DEBUG      Core.Shape      AnalyseAndOptimize 171 :  - Analysing the shape for CW direction Nr: 13
+DEBUG      Core.Shape      setNearestStPoint 180 :  - Clicked Point: X ->  0.000  Y ->  0.000
+DEBUG      Core.Shape      setNearestStPoint 182 :  - Old Start Point: X -> 87.875  Y -> 45.875
+DEBUG      Core.Shape      setNearestStPoint 191 :  - New Start Point: X -> 87.875  Y -> 45.875
+DEBUG      Core.Shape      AnalyseAndOptimize 171 :  - Analysing the shape for CW direction Nr: 14
+DEBUG      Core.Shape      setNearestStPoint 180 :  - Clicked Point: X ->  0.000  Y ->  0.000
+DEBUG      Core.Shape      setNearestStPoint 182 :  - Old Start Point: X -> 66.875  Y ->  9.502
+DEBUG      Core.Shape      setNearestStPoint 191 :  - New Start Point: X -> 66.875  Y ->  9.502
+DEBUG      Core.Shape      AnalyseAndOptimize 171 :  - Analysing the shape for CW direction Nr: 15
+DEBUG      Core.Shape      setNearestStPoint 180 :  - Clicked Point: X ->  0.000  Y ->  0.000
+DEBUG      Core.Shape      setNearestStPoint 182 :  - Old Start Point: X -> 24.875  Y ->  9.502
+DEBUG      Core.Shape      setNearestStPoint 191 :  - New Start Point: X -> 24.875  Y ->  9.502
+DEBUG      Core.Shape      AnalyseAndOptimize 171 :  - Analysing the shape for CW direction Nr: 16
+DEBUG      Core.Shape      setNearestStPoint 180 :  - Clicked Point: X ->  0.000  Y ->  0.000
+DEBUG      Core.Shape      setNearestStPoint 182 :  - Old Start Point: X ->  3.875  Y -> 45.875
+DEBUG      Core.Shape      setNearestStPoint 191 :  - New Start Point: X ->  3.875  Y -> 45.875
+DEBUG      Core.Shape      AnalyseAndOptimize 171 :  - Analysing the shape for CW direction Nr: 17
+DEBUG      Core.Shape      setNearestStPoint 180 :  - Clicked Point: X ->  0.000  Y ->  0.000
+DEBUG      Core.Shape      setNearestStPoint 182 :  - Old Start Point: X -> 42.339  Y -> 42.339
+DEBUG      Core.Shape      setNearestStPoint 191 :  - New Start Point: X -> 42.339  Y -> 42.339
+DEBUG      Core.Shape      AnalyseAndOptimize 171 :  - Analysing the shape for CW direction Nr: 18
+DEBUG      Core.Shape      setNearestStPoint 180 :  - Clicked Point: X -> -2.828  Y -> 34.172
+DEBUG      Core.Shape      setNearestStPoint 182 :  - Old Start Point: X -> 45.168  Y -> 82.168
+DEBUG      Core.Shape      setNearestStPoint 191 :  - New Start Point: X -> 45.168  Y -> 82.168
+DEBUG      Core.Shape      setNearestStPoint 180 :  - Clicked Point: X -> 29.215  Y -> -21.328
+DEBUG      Core.Shape      setNearestStPoint 182 :  - Old Start Point: X -> 77.211  Y -> 26.668
+DEBUG      Core.Shape      setNearestStPoint 191 :  - New Start Point: X -> 77.211  Y -> 26.668
+DEBUG      Core.Shape      setNearestStPoint 180 :  - Clicked Point: X -> -29.215  Y -> -15.672
+DEBUG      Core.Shape      setNearestStPoint 182 :  - Old Start Point: X -> 13.125  Y -> 26.668
+DEBUG      Core.Shape      setNearestStPoint 191 :  - New Start Point: X -> 13.125  Y -> 26.668
+DEBUG      Core.Shape      setNearestStPoint 180 :  - Clicked Point: X -> -7.778  Y -> -7.778
+DEBUG      Core.Shape      setNearestStPoint 182 :  - Old Start Point: X -> 40.218  Y -> 40.218
+DEBUG      Core.Shape      setNearestStPoint 191 :  - New Start Point: X -> 40.218  Y -> 40.218
+DEBUG      Core.Shape      setNearestStPoint 180 :  - Clicked Point: X -> -2.121  Y -> 12.879
+DEBUG      Core.Shape      setNearestStPoint 182 :  - Old Start Point: X -> 45.875  Y -> 60.875
+DEBUG      Core.Shape      setNearestStPoint 191 :  - New Start Point: X -> 45.875  Y -> 60.875
+DEBUG      Core.Shape      setNearestStPoint 180 :  - Clicked Point: X -> -10.869  Y ->  9.621
+DEBUG      Core.Shape      setNearestStPoint 182 :  - Old Start Point: X -> 32.884  Y -> 53.375
+DEBUG      Core.Shape      setNearestStPoint 191 :  - New Start Point: X -> 32.884  Y -> 53.375
+DEBUG      Core.Shape      setNearestStPoint 180 :  - Clicked Point: X -> -10.869  Y -> -5.379
+DEBUG      Core.Shape      setNearestStPoint 182 :  - Old Start Point: X -> 32.884  Y -> 38.375
+DEBUG      Core.Shape      setNearestStPoint 191 :  - New Start Point: X -> 32.884  Y -> 38.375
+DEBUG      Core.Shape      setNearestStPoint 180 :  - Clicked Point: X ->  2.121  Y -> -12.879
+DEBUG      Core.Shape      setNearestStPoint 182 :  - Old Start Point: X -> 45.875  Y -> 30.875
+DEBUG      Core.Shape      setNearestStPoint 191 :  - New Start Point: X -> 45.875  Y -> 30.875
+DEBUG      Core.Shape      setNearestStPoint 180 :  - Clicked Point: X -> 10.869  Y -> -9.621
+DEBUG      Core.Shape      setNearestStPoint 182 :  - Old Start Point: X -> 58.865  Y -> 38.375
+DEBUG      Core.Shape      setNearestStPoint 191 :  - New Start Point: X -> 58.865  Y -> 38.375
+DEBUG      Core.Shape      setNearestStPoint 180 :  - Clicked Point: X -> 10.869  Y ->  5.379
+DEBUG      Core.Shape      setNearestStPoint 182 :  - Old Start Point: X -> 58.865  Y -> 53.375
+DEBUG      Core.Shape      setNearestStPoint 191 :  - New Start Point: X -> 58.865  Y -> 53.375
+DEBUG      Core.Shape      setNearestStPoint 180 :  - Clicked Point: X ->  4.243  Y ->  4.243
+DEBUG      Core.Shape      setNearestStPoint 182 :  - Old Start Point: X -> 43.753  Y -> 43.753
+DEBUG      Core.Shape      setNearestStPoint 191 :  - New Start Point: X -> 43.753  Y -> 43.753
+DEBUG      Core.Shape      setNearestStPoint 180 :  - Clicked Point: X -> -23.121  Y -> 34.252
+DEBUG      Core.Shape      setNearestStPoint 182 :  - Old Start Point: X -> 24.875  Y -> 82.248
+DEBUG      Core.Shape      setNearestStPoint 191 :  - New Start Point: X -> 24.875  Y -> 82.248
+DEBUG      Core.Shape      setNearestStPoint 180 :  - Clicked Point: X -> 18.879  Y -> 34.252
+DEBUG      Core.Shape      setNearestStPoint 182 :  - Old Start Point: X -> 66.875  Y -> 82.248
+DEBUG      Core.Shape      setNearestStPoint 191 :  - New Start Point: X -> 66.875  Y -> 82.248
+DEBUG      Core.Shape      setNearestStPoint 180 :  - Clicked Point: X -> 39.879  Y -> -2.121
+DEBUG      Core.Shape      setNearestStPoint 182 :  - Old Start Point: X -> 87.875  Y -> 45.875
+DEBUG      Core.Shape      setNearestStPoint 191 :  - New Start Point: X -> 87.875  Y -> 45.875
+DEBUG      Core.Shape      setNearestStPoint 180 :  - Clicked Point: X -> 23.121  Y -> -34.252
+DEBUG      Core.Shape      setNearestStPoint 182 :  - Old Start Point: X -> 66.875  Y ->  9.502
+DEBUG      Core.Shape      setNearestStPoint 191 :  - New Start Point: X -> 66.875  Y ->  9.502
+DEBUG      Core.Shape      setNearestStPoint 180 :  - Clicked Point: X -> -18.879  Y -> -34.252
+DEBUG      Core.Shape      setNearestStPoint 182 :  - Old Start Point: X -> 24.875  Y ->  9.502
+DEBUG      Core.Shape      setNearestStPoint 191 :  - New Start Point: X -> 24.875  Y ->  9.502
+DEBUG      Core.Shape      setNearestStPoint 180 :  - Clicked Point: X -> -39.879  Y ->  2.121
+DEBUG      Core.Shape      setNearestStPoint 182 :  - Old Start Point: X ->  3.875  Y -> 45.875
+DEBUG      Core.Shape      setNearestStPoint 191 :  - New Start Point: X ->  3.875  Y -> 45.875
+DEBUG      Core.Shape      setNearestStPoint 180 :  - Clicked Point: X -> -5.657  Y -> -5.657
+DEBUG      Core.Shape      setNearestStPoint 182 :  - Old Start Point: X -> 42.339  Y -> 42.339
+DEBUG      Core.Shape      setNearestStPoint 191 :  - New Start Point: X -> 42.339  Y -> 42.339
+DEBUG      Core.Shape      setNearestStPoint 180 :  - Clicked Point: X -> 33.941  Y -> 33.941
+DEBUG      Core.Shape      setNearestStPoint 182 :  - Old Start Point: X -> 14.055  Y -> 14.055
+DEBUG      Core.Shape      setNearestStPoint 191 :  - New Start Point: X -> 14.055  Y -> 14.055
+DEBUG      DxfImport.myCanvasClass autoscale  241 :  - Autoscaling to extend: PyQt4.QtCore.QRectF(0.0, -95.99204289057482, 100.79164503510357, 100.79164503510357)
+DEBUG      root            optimizeTSP 385 :  - Optimize order of enabled shapes per layer
+DEBUG      root            optimizeTSP 389 :  - Updating order according to TreeView
+DEBUG      root            optimizeTSP 401 :  - Nr. of Shapes 19; Nr. of Shapes in Route 2
+DEBUG      root            optimizeTSP 402 :  - Export Order for start: [18, 0]
+INFO       root            optimizeTSP 425 :  - TSP start values initialised for Layer 0
+DEBUG      root            optimizeTSP 426 :  - Shapes to write: [0, 1]
+DEBUG      root            optimizeTSP 427 :  - Fixed order: [0, 1]
+DEBUG      root            optimizeTSP 435 :  - TSP done with result: Iteration nrs:    300
+Shape nrs:      3
+Population:     8
+Mutate rate:    0.95
+order:          [0, 1]
+Start length:   119.8
+Opt. length:    119.8
+Opt. route:     [2, 0, 1]
+DEBUG      root            optimizeTSP 440 :  - New Export Order after TSP: [18, 0]
+DEBUG      root            exportShapes 292 :  - Export the enabled shapes
+DEBUG      root            exportShapes 298 :  - Sorted layers:
+DEBUG      root            exportShapes 300 :  - LayerContents[0] = 
+LayerContent
+nr:     0
+name:   0
+shapes: [<gui.canvas2d.ShapeGUI object at 0x7f8df05aa6d8>, <gui.canvas2d.ShapeGUI object at 0x7f8df05aa770>, <gui.canvas2d.ShapeGUI object at 0x7f8df05aa808>, <gui.canvas2d.ShapeGUI object at 0x7f8df05aa8a0>, <gui.canvas2d.ShapeGUI object at 0x7f8df05aa938>, <gui.canvas2d.ShapeGUI object at 0x7f8df05aa9d0>, <gui.canvas2d.ShapeGUI object at 0x7f8df05aaa68>, <gui.canvas2d.ShapeGUI object at 0x7f8df05aab00>, <gui.canvas2d.ShapeGUI object at 0x7f8df05aab98>, <gui.canvas2d.ShapeGUI object at 0x7f8df05aac30>, <gui.canvas2d.ShapeGUI object at 0x7f8df05aacc8>, <gui.canvas2d.ShapeGUI object at 0x7f8df05aad60>, <gui.canvas2d.ShapeGUI object at 0x7f8df05aadf8>, <gui.canvas2d.ShapeGUI object at 0x7f8df05aae90>, <gui.canvas2d.ShapeGUI object at 0x7f8df05aaf28>, <gui.canvas2d.ShapeGUI object at 0x7f8df05bb050>, <gui.canvas2d.ShapeGUI object at 0x7f8df05bb0e8>, <gui.canvas2d.ShapeGUI object at 0x7f8df05bb180>, <gui.canvas2d.ShapeGUI object at 0x7f8df05aa640>]
+INFO       root            showSaveDialog 499 :  - File: /home/sergius/deeds/smarthome/mechanics/irrigator-pump/rotor2 selected
+DEBUG      PostPro.PostProcessorConfig load_config 198 :  - read existing varspace '/home/sergius/build/lib/dxf2gcode/postpro_config/postpro_config.cfg'
+DEBUG      PostPro.Breaks  __init__   59  :  - Found 0 break layers
+DEBUG      PostPro.PostProcessor exportShapes 169 :  - Beginning export of Layer Nr. 0, Name 0
+DEBUG      PostPro.PostProcessor exportShapes 171 :  - Nr. of Shapes 19; Nr. of Shapes in Route 2
+DEBUG      PostPro.PostProcessor exportShapes 184 :  - Beginning export of Shape Nr: 18
+DEBUG      PostPro.PostProcessor exportShapes 184 :  - Beginning export of Shape Nr: 0
+INFO       PostPro.PostProcessor exportShapes 213 :  - Export to FILE was successful
+DEBUG      root            closeEvent 999 :  - Closing
