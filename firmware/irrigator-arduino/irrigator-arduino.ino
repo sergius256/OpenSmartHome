@@ -1,21 +1,21 @@
 /* Irrigator (Arduino version) firmware source code
- * Copyright © 2016-2017 Sergey Portnov
- *
- * This program is free software: you can redistribute it and/or modify
- * it under the terms of the GNU General Public License as published by
- * the Free Software Foundation, either version 3 of the License, or
- * (at your option) any later version.
- *
- * This program is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- * GNU General Public License for more details.
- *
- * You should have received a copy of the GNU General Public License
- * along with this program.  If not, see http://www.gnu.org/licenses/ .
- *
- * Authors: Sergey Portnov <sergius256@gmail.com>
- */
+   Copyright © 2016-2017 Sergey Portnov
+
+   This program is free software: you can redistribute it and/or modify
+   it under the terms of the GNU General Public License as published by
+   the Free Software Foundation, either version 3 of the License, or
+   (at your option) any later version.
+
+   This program is distributed in the hope that it will be useful,
+   but WITHOUT ANY WARRANTY; without even the implied warranty of
+   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+   GNU General Public License for more details.
+
+   You should have received a copy of the GNU General Public License
+   along with this program.  If not, see http://www.gnu.org/licenses/ .
+
+   Authors: Sergey Portnov <sergius256@gmail.com>
+*/
 
 /* Parser #defines:
 
@@ -49,7 +49,7 @@
    put it here to simplify memory allocation. After all, we have a
    microcontroller chip with fixed amount of memory and malloc()
    possibly costs more bytes than all fixed-legth arrays together.
- */
+*/
 
 #ifndef ADDR
 #define ADDR 0x01000001
@@ -94,10 +94,10 @@ typedef struct {
 } TParserConfig;
 
 char buffer[BUFFER_LEN], rxbuffer[BUFFER_LEN];
-char device_id[INIT_LEN+1];
+char device_id[INIT_LEN + 1];
 
 TParserConfig ParserFunctions[NUM_PARSER_FUNCTIONS];
-unsigned char buffer_cur_len=0,rxbuffer_cur_len=0,transmission_ready_flag=0;
+unsigned char buffer_cur_len = 0, rxbuffer_cur_len = 0, transmission_ready_flag = 0;
 
 void SetDeviceID(void);
 signed char IsTransmissionToOurs(void);
@@ -111,7 +111,7 @@ signed char DoAttention(void);
 signed char DoSetBoudaries(void);
 signed char DoGetValues(void);
 
-int MinSignal[NUM_CHANNELS],CurSignal[NUM_CHANNELS],MaxSignal[NUM_CHANNELS];
+int MinSignal[NUM_CHANNELS], CurSignal[NUM_CHANNELS], MaxSignal[NUM_CHANNELS];
 short int ChannelState[NUM_CHANNELS];
 
 ////////////////////////////////////////////////////////////////////////////
@@ -122,18 +122,18 @@ void SetDeviceID(void)
     This function should be called before all others to initialize
     device_id pointer.
   */
-  device_id[0] ='D';
-  device_id[1] ='E';
-  device_id[2] ='V';
-  device_id[3] ='0'+(ADDR>>28)%0x10;
-  device_id[4] ='0'+(ADDR>>24)%0x10;
-  device_id[5] ='0'+(ADDR>>20)%0x10;
-  device_id[6] ='0'+(ADDR>>16)%0x10;
-  device_id[7] ='0'+(ADDR>>12)%0x10;
-  device_id[8] ='0'+(ADDR>>8)%0x10;
-  device_id[9] ='0'+(ADDR>>4)%0x10;
-  device_id[10]='0'+ADDR%0x10;
-  device_id[11]=0;
+  device_id[0] = 'D';
+  device_id[1] = 'E';
+  device_id[2] = 'V';
+  device_id[3] = '0' + (ADDR >> 28) % 0x10;
+  device_id[4] = '0' + (ADDR >> 24) % 0x10;
+  device_id[5] = '0' + (ADDR >> 20) % 0x10;
+  device_id[6] = '0' + (ADDR >> 16) % 0x10;
+  device_id[7] = '0' + (ADDR >> 12) % 0x10;
+  device_id[8] = '0' + (ADDR >> 8) % 0x10;
+  device_id[9] = '0' + (ADDR >> 4) % 0x10;
+  device_id[10] = '0' + ADDR % 0x10;
+  device_id[11] = 0;
 }
 
 signed char IsTransmissionToOurs(void)
@@ -145,19 +145,19 @@ signed char IsTransmissionToOurs(void)
     out.
   */
   unsigned char i;
-  
-  if(strncasecmp(buffer,device_id,INIT_LEN))
-    {
-      buffer[0]=0;
-      buffer_cur_len=0;
-      return 0;
-    }
-  
-  buffer_cur_len=strnlen(buffer,BUFFER_LEN); // can be commented out due to program logic
-  for(i=0;i<buffer_cur_len-INIT_LEN;i++)
-    buffer[i]=buffer[i+INIT_LEN];
-  buffer[i]=0;
-  buffer_cur_len=i;
+
+  if (strncasecmp(buffer, device_id, INIT_LEN))
+  {
+    buffer[0] = 0;
+    buffer_cur_len = 0;
+    return 0;
+  }
+
+  buffer_cur_len = strnlen(buffer, BUFFER_LEN); // can be commented out due to program logic
+  for (i = 0; i < buffer_cur_len - INIT_LEN; i++)
+    buffer[i] = buffer[i + INIT_LEN];
+  buffer[i] = 0;
+  buffer_cur_len = i;
   return -1;
 }
 
@@ -167,19 +167,19 @@ THandler Parser(void)
     This function should be called if transmitted text is addressed to
     our device.
   */
-  unsigned char i,j;
-  
-  for(j=0;j<NUM_PARSER_FUNCTIONS;j++)
+  unsigned char i, j;
+
+  for (j = 0; j < NUM_PARSER_FUNCTIONS; j++)
+  {
+    if (strncasecmp(buffer, ParserFunctions[j].name, ParserFunctions[j].name_len) == 0)
     {
-      if(strncasecmp(buffer,ParserFunctions[j].name,ParserFunctions[j].name_len)==0)
-	{
-	  for(i=0;i<buffer_cur_len-ParserFunctions[j].name_len;i++)
-	    buffer[i]=buffer[i+ParserFunctions[j].name_len];
-	  buffer[i]=0;
-	  buffer_cur_len=i;
-	  return ParserFunctions[j].handler;
-	}
+      for (i = 0; i < buffer_cur_len - ParserFunctions[j].name_len; i++)
+        buffer[i] = buffer[i + ParserFunctions[j].name_len];
+      buffer[i] = 0;
+      buffer_cur_len = i;
+      return ParserFunctions[j].handler;
     }
+  }
   return NULL;
 }
 
@@ -190,17 +190,17 @@ THandler Parser(void)
 void CopyFromRXtoParser(void)
 {
   unsigned char i;
-  
+
   //Serial.println(rxbuffer_cur_len);
   //Serial.println(rxbuffer);
-  for(i=0;i<rxbuffer_cur_len;i++)
-    {
-      buffer[i]=rxbuffer[i];
-    }
-  if(i<BUFFER_LEN)
-    buffer[i]=0;
-  buffer_cur_len=rxbuffer_cur_len;
-  rxbuffer_cur_len=0;
+  for (i = 0; i < rxbuffer_cur_len; i++)
+  {
+    buffer[i] = rxbuffer[i];
+  }
+  if (i < BUFFER_LEN)
+    buffer[i] = 0;
+  buffer_cur_len = rxbuffer_cur_len;
+  rxbuffer_cur_len = 0;
   //Serial.println(buffer);
 }
 
@@ -218,81 +218,81 @@ signed char DoSetBoudaries(void)
 {
   // Command sould be DEVxxxxxxxxSETcMINaMAXb\n
   // When calling this function, buffer will contain "cMINaMAXb\n"
-  int i, next_token_pos, multiplier=1, c=0, a=0, b=0;
-  
+  int i, next_token_pos, multiplier = 1, c = 0, a = 0, b = 0;
+
   // Go to the last digit of channel number:
-  for(i=0;i<buffer_cur_len && buffer[i] >= '0' && buffer[i] <= '9';i++);
+  for (i = 0; i < buffer_cur_len && buffer[i] >= '0' && buffer[i] <= '9'; i++);
   next_token_pos = i;
   i--;
-  for(;i>=0;i--)
-    {
-      c+=(buffer[i]-'0')*multiplier;
-      multiplier*=10;
-    }
-  
+  for (; i >= 0; i--)
+  {
+    c += (buffer[i] - '0') * multiplier;
+    multiplier *= 10;
+  }
+
   // Shift buffer left
-  for(i=0;i<buffer_cur_len-next_token_pos;i++)
-    buffer[i]=buffer[i+next_token_pos];
-  buffer[i]=0;
-  buffer_cur_len=i;
-  
-  if(strncasecmp(buffer,"MIN",3)==0)
+  for (i = 0; i < buffer_cur_len - next_token_pos; i++)
+    buffer[i] = buffer[i + next_token_pos];
+  buffer[i] = 0;
+  buffer_cur_len = i;
+
+  if (strncasecmp(buffer, "MIN", 3) == 0)
+  {
+    for (i = 0; i < buffer_cur_len - 3; i++)
+      buffer[i] = buffer[i + 3];
+    buffer[i] = 0;
+    buffer_cur_len = i;
+
+    // Go to the last digit of minimal value:
+    for (i = 0; i < buffer_cur_len && buffer[i] >= '0' && buffer[i] <= '9'; i++);
+    next_token_pos = i;
+    i--;
+    multiplier = 1;
+    for (; i >= 0; i--)
     {
-      for(i=0;i<buffer_cur_len-3;i++)
-	buffer[i]=buffer[i+3];
-      buffer[i]=0;
-      buffer_cur_len=i;
-      
-      // Go to the last digit of minimal value:
-      for(i=0;i<buffer_cur_len && buffer[i] >= '0' && buffer[i] <= '9';i++);
-      next_token_pos = i;
-      i--;
-      multiplier=1;
-      for(;i>=0;i--)
-	{
-	  a+=(buffer[i]-'0')*multiplier;
-	  multiplier*=10;
-	}
-      
-      // Shift buffer left
-      for(i=0;i<buffer_cur_len-next_token_pos;i++)
-	buffer[i]=buffer[i+next_token_pos];
-      buffer[i]=0;
-      buffer_cur_len=i;
+      a += (buffer[i] - '0') * multiplier;
+      multiplier *= 10;
     }
+
+    // Shift buffer left
+    for (i = 0; i < buffer_cur_len - next_token_pos; i++)
+      buffer[i] = buffer[i + next_token_pos];
+    buffer[i] = 0;
+    buffer_cur_len = i;
+  }
   else
     return -1;
-  
-  if(strncasecmp(buffer,"MAX",3)==0)
+
+  if (strncasecmp(buffer, "MAX", 3) == 0)
+  {
+    for (i = 0; i < buffer_cur_len - 3; i++)
+      buffer[i] = buffer[i + 3];
+    buffer[i] = 0;
+    buffer_cur_len = i;
+
+    // Go to the last digit of minimal value:
+    for (i = 0; i < buffer_cur_len && buffer[i] >= '0' && buffer[i] <= '9'; i++);
+    next_token_pos = i;
+    i--;
+    multiplier = 1;
+    for (; i >= 0; i--)
     {
-      for(i=0;i<buffer_cur_len-3;i++)
-	buffer[i]=buffer[i+3];
-      buffer[i]=0;
-      buffer_cur_len=i;
-      
-      // Go to the last digit of minimal value:
-      for(i=0;i<buffer_cur_len && buffer[i] >= '0' && buffer[i] <= '9';i++);
-      next_token_pos = i;
-      i--;
-      multiplier=1;
-      for(;i>=0;i--)
-	{
-	  b+=(buffer[i]-'0')*multiplier;
-	  multiplier*=10;
-	}
-      
-      // Shift buffer left
-      for(i=0;i<buffer_cur_len-next_token_pos;i++)
-	buffer[i]=buffer[i+next_token_pos];
-      buffer[i]=0;
-      buffer_cur_len=i;
+      b += (buffer[i] - '0') * multiplier;
+      multiplier *= 10;
     }
+
+    // Shift buffer left
+    for (i = 0; i < buffer_cur_len - next_token_pos; i++)
+      buffer[i] = buffer[i + next_token_pos];
+    buffer[i] = 0;
+    buffer_cur_len = i;
+  }
   else
     return -1;
-  
+
   // Ok, now we have channel number, min and max signal values
-  MinSignal[c]=a;
-  MaxSignal[c]=b;
+  MinSignal[c] = a;
+  MaxSignal[c] = b;
   Serial.print(device_id);
   Serial.println("OK");
   return 0;
@@ -301,23 +301,23 @@ signed char DoSetBoudaries(void)
 signed char DoGetValues(void)
 {
   int i;
-  
+
   Serial.print(device_id);
-  
-  for(i=0;i<NUM_CHANNELS;i++)
-    {
-      // Possibly not the best solution because it can add some
-      // undefined time to any main operation, but we don't use
-      // Arduino to control nuclear power plant.
-      Serial.print("C");
-      Serial.print(i);
-      Serial.print("MIN");
-      Serial.print(MinSignal[i]);
-      Serial.print("MAX");
-      Serial.print(MaxSignal[i]);
-      Serial.print("CUR");
-      Serial.print(CurSignal[i]);
-    }
+
+  for (i = 0; i < NUM_CHANNELS; i++)
+  {
+    // Possibly not the best solution because it can add some
+    // undefined time to any main operation, but we don't use
+    // Arduino to control nuclear power plant.
+    Serial.print("C");
+    Serial.print(i);
+    Serial.print("MIN");
+    Serial.print(MinSignal[i]);
+    Serial.print("MAX");
+    Serial.print(MaxSignal[i]);
+    Serial.print("CUR");
+    Serial.print(CurSignal[i]);
+  }
   Serial.println("OK");
   return 0;
 }
@@ -328,35 +328,35 @@ signed char DoGetValues(void)
 void setup(void)
 {
   int i;
-  
+
   Serial.begin(9600);
-  for(i=HIGHEST_PIN;i>HIGHEST_PIN - NUM_CHANNELS;i--)
-    pinMode(i,OUTPUT);
-  pinMode(LED_BUILTIN,OUTPUT);
-  
+  for (i = HIGHEST_PIN; i > HIGHEST_PIN - NUM_CHANNELS; i--)
+    pinMode(i, OUTPUT);
+  pinMode(LED_BUILTIN, OUTPUT);
+
   ParserFunctions[0].name_len = 2;
-  sprintf(ParserFunctions[0].name,"AT");
+  sprintf(ParserFunctions[0].name, "AT");
   ParserFunctions[0].handler = DoAttention;
-  
+
   ParserFunctions[1].name_len = 3;
-  sprintf(ParserFunctions[1].name,"SET");
+  sprintf(ParserFunctions[1].name, "SET");
   ParserFunctions[1].handler = DoSetBoudaries;
-  
+
   ParserFunctions[2].name_len = 3;
-  sprintf(ParserFunctions[2].name,"GET");
+  sprintf(ParserFunctions[2].name, "GET");
   ParserFunctions[2].handler = DoGetValues;
-  
+
   // Initialize MinSignal, CurSignal, MaxSignal and ChannelState
   // MinSignal and MaxSignal should be lower and higher boundaries
   // given by ADC, ChannelState should say the device to do nothing
-  for(i=0;i<NUM_CHANNELS;i++)
-    {
-      MinSignal[i]=MIN_INIT_SIGNAL;
-      CurSignal[i]=analogRead(i);
-      MaxSignal[i]=MAX_INIT_SIGNAL;
-      ChannelState[i]=LOW;
-      digitalWrite(HIGHEST_PIN-i,LOW);
-    }
+  for (i = 0; i < NUM_CHANNELS; i++)
+  {
+    MinSignal[i] = MIN_INIT_SIGNAL;
+    CurSignal[i] = analogRead(i);
+    MaxSignal[i] = MAX_INIT_SIGNAL;
+    ChannelState[i] = LOW;
+    digitalWrite(HIGHEST_PIN - i, LOW);
+  }
   SetDeviceID();
 }
 
@@ -365,46 +365,45 @@ void loop()
   // put your main code here, to run repeatedly:
   THandler hndl;
   int i;
-  
-  if(transmission_ready_flag)
+
+  if (transmission_ready_flag)
+  {
+    if (IsTransmissionToOurs())
     {
-      if(IsTransmissionToOurs())
-	{
-          if((hndl=Parser())==NULL)
-	    {
-	      // Parser didn't find proper function
-	      Serial.print(device_id);
-	      Serial.println("ERROR_NO_FUNCTION");
-	    }
-	  else
-	    if(hndl())
-	      {
-		// Called dunction handler dropped with error
-		Serial.print(device_id);
-		Serial.println("ERROR");
-	      }
-	}
-      
-      // Final cleanup
-      buffer[0]=0;
-      buffer_cur_len=0;
-      transmission_ready_flag = 0;
+      if ((hndl = Parser()) == NULL)
+      {
+        // Parser didn't find proper function
+        Serial.print(device_id);
+        Serial.println("ERROR_NO_FUNCTION");
+      }
+      else if (hndl())
+      {
+        // Called dunction handler dropped with error
+        Serial.print(device_id);
+        Serial.println("ERROR");
+      }
     }
-  
+
+    // Final cleanup
+    buffer[0] = 0;
+    buffer_cur_len = 0;
+    transmission_ready_flag = 0;
+  }
+
   // After all the etiquette is done, we can do our main job
-  for(i=0;i<NUM_CHANNELS;i++)
-    {
-      CurSignal[i]=analogRead(i);
-    }
-  for(i=0;i<NUM_CHANNELS;i++)
-    {
-      if(CurSignal[i]>MaxSignal[i]) // Sensor is dry
-	ChannelState[i]=HIGH; //
-      if(CurSignal[i]<MinSignal[i]) // Sensor is wet
-	ChannelState[i]=LOW;
-    }
-  for(i=0;i<NUM_CHANNELS;i++)
-    digitalWrite(HIGHEST_PIN-i,ChannelState[i]);
+  for (i = 0; i < NUM_CHANNELS; i++)
+  {
+    CurSignal[i] = analogRead(i);
+  }
+  for (i = 0; i < NUM_CHANNELS; i++)
+  {
+    if (CurSignal[i] > MaxSignal[i]) // Sensor is dry
+      ChannelState[i] = HIGH; //
+    if (CurSignal[i] < MinSignal[i]) // Sensor is wet
+      ChannelState[i] = LOW;
+  }
+  for (i = 0; i < NUM_CHANNELS; i++)
+    digitalWrite(HIGHEST_PIN - i, ChannelState[i]);
 }
 
 // Serial interrupt handler needed to put recieved data into rxbuffer[],
@@ -412,15 +411,15 @@ void loop()
 // needed.
 void serialEvent(void)
 {
-  while(Serial.available() && (transmission_ready_flag == 0))
+  while (Serial.available() && (transmission_ready_flag == 0))
+  {
+    rxbuffer[rxbuffer_cur_len] = (char)Serial.read();
+    if ((rxbuffer[rxbuffer_cur_len] == '\n') || (rxbuffer_cur_len >= BUFFER_LEN))
     {
-      rxbuffer[rxbuffer_cur_len] = (char)Serial.read();
-      if((rxbuffer[rxbuffer_cur_len] == '\n') || (rxbuffer_cur_len >= BUFFER_LEN))
-	{
-	  CopyFromRXtoParser();
-	  transmission_ready_flag = 255;
-	}
-      else
-	rxbuffer_cur_len++;
+      CopyFromRXtoParser();
+      transmission_ready_flag = 255;
     }
+    else
+      rxbuffer_cur_len++;
+  }
 }
